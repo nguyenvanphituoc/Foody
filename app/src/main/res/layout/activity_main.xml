@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.nguyenvanphituoc.foody.Activity.Fragment.TabPlacesBookingFragment">
+
+    <include
+        android:id="@+id/ontopToolbar"
+        layout="@layout/menu_ontop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:elevation="10dp" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout_ontop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ontopToolbar"
+        android:elevation="8dp"
+        tools:targetApi="lollipop" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tab_layout_onbottom"
+        android:layout_below="@+id/tab_layout_ontop"
+        android:elevation="6dp"
+        tools:targetApi="lollipop" />
+
+    <include
+        android:id="@+id/tab_layout_onbottom"
+        layout="@layout/tab_onbottom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:elevation="20dp"
+        android:translationZ="20dp" />
+    <!--<android.support.design.widget.TabLayout-->
+    <!--android:id="@+id/tab_layout_onbottom"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/clWhite"-->
+    <!--android:elevation="8dp"-->
+    <!--android:minHeight="?attr/actionBarSize"-->
+    <!--app:tabTextColor="@color/clGrey1"-->
+    <!--tools:targetApi="lollipop"-->
+    <!--android:layout_alignParentBottom="true"/>-->
+
+</RelativeLayout>

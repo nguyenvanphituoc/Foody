@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">Foody</string>
+    <string name="HOME_BUTTON">Home Button</string>
+    <string name="MENU_MORE">Menu More</string>
+    <string name="FOODY_TItlE">\u0191</string>
+    <string name="FOODY_MENU_PLAES_VI">Ở đâu</string>
+    <string name="FOODY_MENU_PLACES_BOOKING_VI">Đặt Chỗ</string>
+    <string name="FOODY_MENU_FOOD_VI">Ăn gì</string>
+    <string name="ACTION_CANCEL_VI">Hủy</string>
+    <string name="contentDesciption_Adds">Thêm vào</string>
+    <string name="contentDesciption_News">Tin mới</string>
+    <string name="contentDesciption_Gall">Hình ảnh</string>
+    <string name="contentDesciption_Sear">Tìm kiếm</string>
+    <string name="contentDesciption_Nofi">Thông báo</string>
+    <string name="contentDesciption_Prof">Trang cá nhân</string>
+    <string-array name="MENU_PLACES">
+        <item>Ở đâu</item>
+        <item>Danh mục</item>
+        <item>Thành Phố</item>
+    </string-array>
+    <string-array name="PLACES_BOOKING_TAB_TXT">
+        <item>Mới nhất</item>
+        <item>Gần tôi</item>
+        <item>Phổ biến</item>
+        <item>Du khách</item>
+        <item>Ưu đãi E-card</item>
+        <item>Đặt chỗ</item>
+        <item>Ưu đãi thẻ</item>
+        <item>Đặt giao hàng</item>
+    </string-array>
+    <array name="PLACES_BOOKING_TAB">
+        <item>
+            <img>@drawable/foody_icon</img>
+            <name>Mới nhất</name>
+        </item>
+        <item>
+            <img>@drawable/foody_icon</img>
+            <name>Gần tôi</name>
+        </item>
+        <item>
+            <img>@drawable/foody_icon</img>
+            <name>Phổ biến</name>
+        </item>
+        <item>
+            <img>@drawable/foody_icon</img>
+            <name>Du khách</name>
+        </item>
+        <item>
+            <img>@drawable/foody_icon</img>
+            <name>Ưu đãi E-card</name>
+        </item>
+        <item>
+            <img>@drawable/foody_icon</img>
+            <name>Đặt chỗ</name>
+        </item>
+        <item>
+            <img>@drawable/foody_icon</img>
+            <name>Ưu đãi thẻ</name>
+        </item>
+        <item>
+            <img>@drawable/foody_icon</img>
+            <name>Đặt giao hàng</name>
+        </item>
+    </array>
+    <string-array name="PLACES_CATEGORIES_TAB">
+        <item>Mới nhất</item>
+        <item>Gần tôi</item>
+        <item>Phổ biến</item>
+        <item>Du khách</item>
+        <item>Ưu đãi E-card</item>
+        <item>Đặt chỗ</item>
+        <item>Ưu đãi thẻ</item>
+        <item>Đặt giao hàng</item>
+    </string-array>
+    <array name="PLACES_CITY_TAB">
+        <item>@array/PLACES_CITY_TAB_HCM</item>
+    </array>
+    <string-array name="PLACES_CITY_TAB_HCM">
+        <item>Quận 1</item>
+        <item>Quận 2</item>
+        <item>Quận 3</item>
+        <item>Quận 4</item>
+        <item>Quận 5</item>
+        <item>Quận 6</item>
+        <item>Quận 7</item>
+        <item>Quận 8</item>
+        <item>Quận 9</item>
+        <item>Quận 10</item>
+    </string-array>
+</resources>

@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ccffffff"
+    android:orientation="horizontal"
+    android:weightSum="5">
+
+    <ImageButton
+        android:id="@+id/imgBtnOnBottomToolBar1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/toolbar_home_empty"
+        android:contentDescription="@string/contentDesciption_News"/>
+
+    <ImageButton
+        android:id="@+id/imgBtnOnBottomToolBar2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/toolbar_home_empty"
+        android:contentDescription="@string/contentDesciption_Gall"/>
+
+    <ImageButton
+        android:id="@+id/imgBtnOnBottomToolBar3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/toolbar_home_empty"
+        android:contentDescription="@string/contentDesciption_Sear"/>
+
+    <ImageButton
+        android:id="@+id/imgBtnOnBottomToolBar4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/toolbar_home_empty"
+        android:contentDescription="@string/contentDesciption_Nofi"/>
+    <ImageButton
+        android:id="@+id/imgBtnOnBottomToolBar5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/toolbar_home_empty"
+        android:contentDescription="@string/contentDesciption_Prof"/>
+</LinearLayout>

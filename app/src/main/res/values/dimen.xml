@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text sizes -->
+    <dimen name="text_size_small">14.0sp</dimen>
+    <dimen name="text_size_medium">16.0sp</dimen>
+    <dimen name="text_size_heavy">26.0sp</dimen>
+    <!-- ActionBar color strip -->
+    <dimen name="colorstrip">5dp</dimen>
+</resources>
