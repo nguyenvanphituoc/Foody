@@ -1,6 +1,13 @@
 <!---------------------------------------------------------------------------------------------!>
      tabLayout.setupWithViewPager(viewPager);
-
+            //Use custom layout
+//            for(int i = 0, n = tabOnTop.getTabCount(); i < n ;i++){
+//                TabLayout.Tab tab = tabOnTop.getTabAt(i);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    assert tab != null;
+//                    tab.setCustomView(fragmentAdapter.getTabView(i, tab));
+//                }
+//            }
     private void initialOnTopTab() {
         TypedArray typedArray = res.obtainTypedArray(R.array.MENU_PLACES);
         try {
@@ -43,6 +50,35 @@
             typedArray.recycle();
         }
     }
+     private void initialOnTopToolbar(TabLayout mTabLayout,@ArrayRes int resArrayID) {
+            TypedArray typedArray = res.obtainTypedArray(resArrayID);
+            try {
+                for (int i = 0, n = typedArray.length(); i < n; i++) {
+                    mTabLayout.addTab(mTabLayout.newTab().setText(typedArray.getString(i)));
+                }
+                mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab LayoutTab) {
+                        viewPageMain.setCurrentItem(LayoutTab.getPosition());
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab LayoutTab) {
+
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab LayoutTab) {
+
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                typedArray.recycle();
+            }
+        }
 <!---------------------------------------------------------------------------------------------!>
 public class PageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -99,3 +135,18 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 }
 <!---------------------------------------------------------------------------------------------!>
+
+        if (position % 2 == 0)
+            return mInflater.inflate(R.layout.tab_ontop_food, null);
+        else
+            return mInflater.inflate(R.layout.tab_ontop_places, null);
+
+         TextView tv = new TextView(myContext);
+                tv.setText(tab.getText());
+                if (position % 2 == 0)
+                    tv.setBackgroundResource(R.drawable.buttonleft_menu_style);
+                else
+                    tv.setBackgroundResource(R.drawable.buttonright_menu_style);
+                tv.setTextColor(myContext.getResources().getColorStateList(+R.drawable.button_menu_colorstyle, null));
+                return tv;
+<!--------------------------------------------------------------------------------!>

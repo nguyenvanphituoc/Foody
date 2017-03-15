@@ -10,26 +10,20 @@
         layout="@layout/tab_ontop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:elevation="10dp" />
-
+        android:layout_alignParentTop="true"/>
+    <include
+        android:id="@+id/ontopToolbar"
+        layout="@layout/toolbar_ontop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ontopTab"/>
     <android.support.v4.view.ViewPager
         android:id="@+id/pagerMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/onbottomToolbar"
-        android:layout_below="@+id/ontopTab"
+        android:layout_below="@+id/ontopToolbar"
         android:elevation="6dp"
         tools:targetApi="lollipop" />
-
-    <include
-        android:id="@+id/onbottomToolbar"
-        layout="@layout/toolbar_onbottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:elevation="20dp"
-        android:translationZ="20dp" />
     <!--<android.support.design.widget.TabLayout-->
     <!--android:id="@+id/tab_layout_onbottom"-->
     <!--android:layout_width="match_parent"-->

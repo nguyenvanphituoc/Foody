@@ -20,21 +20,24 @@ import com.example.nguyenvanphituoc.foody.Activity.Fragment.TabPlacesCategoriesF
 import com.example.nguyenvanphituoc.foody.Activity.Fragment.TabPlacesCityFragment;
 import com.example.nguyenvanphituoc.foody.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Admin on 3/12/2017.
  */
 
 public class FragmentAdapterToolbarOnTop extends FragmentStatePagerAdapter {
 
-    private int TabCount;
-    private Context myContext;
-
-    public FragmentAdapterToolbarOnTop(FragmentManager fragmentManager, int CountTabs, Context mContext) {
+    private Context mContext;
+    private LayoutInflater mInflater;
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
+    public FragmentAdapterToolbarOnTop(FragmentManager fragmentManager,  Context mContext) {
 
         super(fragmentManager);
-
-        this.TabCount = CountTabs;
-        this.myContext = mContext;
+        this.mContext = mContext;
+        this.mInflater = LayoutInflater.from(mContext);
     }
 
     @Override
@@ -43,7 +46,6 @@ public class FragmentAdapterToolbarOnTop extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                 return new TabPlacesBookingFragment();
-
             case 1:
                 return new TabPlacesCategoriesFragment();
 
@@ -54,21 +56,23 @@ public class FragmentAdapterToolbarOnTop extends FragmentStatePagerAdapter {
         }
     }
 
+    public void addFragment(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     public View getTabView(int position, TabLayout.Tab tab) {
         // Given you have a custom layout in `res/layout/custom_tab.xml` with a TextView and ImageView
-        TextView tv = new TextView(myContext);
-        tv.setText(tab.getText());
-        if (position % 2 == 0)
-            tv.setBackgroundResource(R.drawable.buttonleft_menu_style);
+        if (position % 2 == 0) {
+            return mInflater.inflate(R.layout.tab_ontop_places, null);
+        }
         else
-            tv.setBackgroundResource(R.drawable.buttonright_menu_style);
-        tv.setTextColor(myContext.getResources().getColorStateList(+R.drawable.button_menu_colorstyle, null));
-        return tv;
+            return mInflater.inflate(R.layout.tab_ontop_food, null);
     }
 
     @Override
     public int getCount() {
-        return TabCount;
+        return mFragmentList.size();
     }
 }
