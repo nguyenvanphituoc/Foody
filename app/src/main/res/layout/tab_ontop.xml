@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar1"
+        android:id="@+id/toolBarMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:background="@color/clRed"
         android:elevation="10dp"
         android:minHeight="?attr/actionBarSize"
-        tools:targetApi="lollipop">
+        tools:targetApi="lollipop"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +27,8 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/HOME_BUTTON"
-                android:src="@mipmap/foody_logo"/>
+                android:src="@mipmap/foody_logo"
+                />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -36,25 +37,30 @@
                 android:layout_weight="5"
                 android:gravity="center">
 
-                <Button
-                    style="?android:attr/button"
-                    android:layout_width="wrap_content"
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_ontop"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/buttonleft_menu_style"
-                    android:minHeight="32dp"
-                    android:minWidth="64dp"
-                    android:text="@string/FOODY_MENU_PLAES_VI"
-                    android:textColor="@drawable/buttonleft_menu_style" />
+                    app:tabIndicatorColor="@android:color/transparent"
+                    app:tabGravity="center"
+                    app:tabPaddingStart="0dp"
+                    app:tabPaddingEnd="0dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/clRed">
+                    <android.support.design.widget.TabItem
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout="@layout/tab_ontop_places"
+                        android:id="@+id/tab_ontop_1"
 
-                <Button
-                    style="?android:attr/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/buttonright_menu_style"
-                    android:minHeight="32dp"
-                    android:minWidth="64dp"
-                    android:text="@string/FOODY_MENU_FOOD_VI"
-                    android:textColor="@drawable/buttonright_menu_style" />
+                        />
+                    <android.support.design.widget.TabItem
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout="@layout/tab_ontop_food"
+                        android:id="@+id/tab_ontop_2"
+                        />
+                </android.support.design.widget.TabLayout>
             </LinearLayout>
 
             <ImageButton
@@ -66,7 +72,9 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/MENU_MORE"
-                android:src="@drawable/ic_add_empty_24dp" />
+                android:src="@drawable/ic_add_empty_24dp"
+                />
+
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
-</LinearLayout>
+</RelativeLayout>

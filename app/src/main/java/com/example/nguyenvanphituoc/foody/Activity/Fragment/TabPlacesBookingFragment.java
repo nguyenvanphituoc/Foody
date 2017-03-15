@@ -13,7 +13,7 @@ public class TabPlacesBookingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.tab_ontop_places_booking, container, false);
+        return inflater.inflate(R.layout.toolbar_ontop_booking, container, false);
 
     }
 }

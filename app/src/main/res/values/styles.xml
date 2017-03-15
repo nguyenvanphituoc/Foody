@@ -10,5 +10,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="OnTop_Tablayout" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">@drawable/custom_toolbar_ontop</item>
+        <item name="tabIndicatorColor">@android:color/transparent</item>
+        <item name="tabSelectedTextColor">@color/black42</item>
+        <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabMode">fixed</item>
+    </style>
 
+    <style name="OnToap_Tablayout" parent="TextAppearance.Design.Tab"></style>
+
+    <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="textAllCaps">true</item>
+    </style>
 </resources>

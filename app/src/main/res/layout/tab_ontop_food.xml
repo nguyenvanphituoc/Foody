@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <Button
+        android:layout_width="64dp"
+        android:layout_height="32dp"
+        android:text="@string/FOODY_MENU_FOOD_VI"
+        android:textColor="@drawable/button_menu_colorstyle"
+        android:background="@drawable/buttonright_menu_style"/>
+</RelativeLayout>

@@ -1,7 +1,27 @@
 <!---------------------------------------------------------------------------------------------!>
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+     tabLayout.setupWithViewPager(viewPager);
 
-            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+    private void initialOnTopTab() {
+        TypedArray typedArray = res.obtainTypedArray(R.array.MENU_PLACES);
+        try {
+            for (int i = 0, n = typedArray.length(); i < n; i++) {
+                TabLayout.Tab mTab = tabOnTop.newTab();
+                tabOnTop.addTab(tabOnTop.newTab().setText(typedArray.getString(i)));
+            }
+            tabOnTop.setTabGravity(TabLayout.GRAVITY_FILL);
+            fragmentAdapter = new FragmentAdapterToolbarOnTop(getSupportFragmentManager(), tabOnTop.getTabCount(), mContext);
+
+            viewPager.setAdapter(fragmentAdapter);
+            for(int i = 0, n = tabOnTop.getTabCount(); i < n ;i++){
+                TabLayout.Tab tab = tabOnTop.getTabAt(i);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    assert tab != null;
+                    tab.setCustomView(fragmentAdapter.getTabView(i, tab));
+                }
+            }
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabOnTop));
+
+            tabOnTop.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab LayoutTab) {
                     viewPager.setCurrentItem(LayoutTab.getPosition());
@@ -17,6 +37,12 @@
 
                 }
             });
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            typedArray.recycle();
+        }
+    }
 <!---------------------------------------------------------------------------------------------!>
 public class PageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";

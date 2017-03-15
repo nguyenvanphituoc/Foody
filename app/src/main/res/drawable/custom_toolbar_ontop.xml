@@ -2,7 +2,7 @@
 <layer-list  xmlns:android="http://schemas.android.com/apk/res/android"
     >
     <item
-        android:drawable="@drawable/custom_ontop_tabload"
+        android:drawable="@drawable/custom_toolbar_ontop_tab"
         android:bottom="-2dp"
         android:top="-2dp"
         android:left="-2dp"

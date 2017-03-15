@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         style="?attr/buttonBarButtonStyle"
+        android:background="@color/clWhite"
         android:textColor="@color/clBlack"
         android:text="@string/ACTION_CANCEL_VI"/>
 </RelativeLayout>
