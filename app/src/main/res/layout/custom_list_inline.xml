@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/custom_inline_item_container"
+    android:id="@+id/custom_inline_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/custom_toast"
@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/customListImageView"
+        android:id="@+id/custom_inline_item_tImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -17,7 +17,7 @@
         android:src="@mipmap/foody_logo" />
 
     <TextView
-        android:id="@+id/customListTextView"
+        android:id="@+id/custom_inline_item_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -31,7 +31,7 @@
         android:textSize="@dimen/text_size_small" />
 
     <TextView
-        android:id="@+id/customListStatusView"
+        android:id="@+id/custom_inline_item_StatusView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

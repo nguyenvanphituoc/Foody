@@ -13,11 +13,11 @@
     <string name="contentDesciption_Sear">Tìm kiếm</string>
     <string name="contentDesciption_Nofi">Thông báo</string>
     <string name="contentDesciption_Prof">Trang cá nhân</string>
-    <string-array name="TABMAIN">
+    <string-array name="TOOLBAR_MAIN_TAB">
         <item>Ở đâu</item>
         <item>Ăn gì</item>
     </string-array>
-    <string-array name="MENU_PLACES">
+    <string-array name="TOOLBAR_ONTOP">
         <item>Ở đâu</item>
         <item>Danh mục</item>
         <item>Thành Phố</item>
