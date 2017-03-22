@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/clGrey"
-    tools:context="com.example.nguyenvanphituoc.foody.Activity.Fragment.ToolbarCityFragment">
+    tools:context="com.example.nguyenvanphituoc.foody.Activity.Fragment.TabBarOnTopHome2Fragment">
 
     <ListView
         android:id="@+id/listCity"
@@ -20,5 +20,5 @@
         android:textSize="@dimen/text_size_heavy"
         android:layout_alignBottom="@id/listCity"
         android:layout_alignParentBottom="true"
-        android:text="@string/contentDesciption_Gall" />
+        android:text="@string/contentDesciption_Prof" />
 </RelativeLayout>

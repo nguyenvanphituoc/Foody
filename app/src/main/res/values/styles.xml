@@ -10,8 +10,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="OnTopToolBar" parent="Widget.Design.TabLayout">
-        <item name="tabBackground">@drawable/custom_toolbar_ontop</item>
+    <style name="OnTopTabBar" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">@drawable/custom_tabbar_ontop</item>
         <item name="tabIndicatorColor">@color/clGrey</item>
         <item name="tabSelectedTextColor">@color/clBlack</item>
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>

@@ -9,12 +9,12 @@
 
     <ImageView
         android:id="@+id/custom_inline_item_tImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_gravity="center"
-        android:contentDescription="@string/contentDesciption_Adds"
-        android:scaleType="fitXY"
-        android:src="@mipmap/foody_logo" />
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/FOODY_TItlE"
+        android:src="@drawable/tab_onbottom_profile_icon"/>
 
     <TextView
         android:id="@+id/custom_inline_item_TextView"
@@ -26,7 +26,6 @@
         android:paddingStart="10dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:text="content"
         android:textColor="@color/clBlack"
         android:textSize="@dimen/text_size_small" />
 
@@ -35,10 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/simple_corner_clred"
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
-        android:text="status"
         android:textColor="@color/clWhite"
         android:textSize="@dimen/text_size_small" />
 </LinearLayout>

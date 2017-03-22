@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:elevation="20dp"
+    tools:targetApi="lollipop">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar_main"
@@ -23,11 +25,14 @@
         android:elevation="6dp"
         android:scrollbars="vertical"
         android:translationZ="6dp"
-        tools:targetApi="lollipop" />
-
+        tools:targetApi="lollipop" >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.view.ViewPager>
     <include
-        android:id="@+id/toolbar_onBottom"
-        layout="@layout/toolbar_onbottom"
+        android:id="@+id/tabbar_onBottom"
+        layout="@layout/tab_onbottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="10dp"

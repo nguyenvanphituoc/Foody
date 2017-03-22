@@ -1,13 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#77ffffff"
-    android:elevation="10dp"
+    android:layout_height="48dp"
+    android:background="#66ffffff"
+    android:gravity="center"
+    android:translationZ="6dp"
+    android:elevation="6dp"
     android:orientation="horizontal"
-    android:translationZ="10dp"
     android:weightSum="5"
-    tools:targetApi="lollipop">
+    tools:targetApi="lollipop"
+    android:minHeight="48dp">
 
     <ImageButton
         android:id="@+id/toolbar_onBottom_imgBtn1"
@@ -16,7 +18,7 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:contentDescription="@string/contentDesciption_News"
-        android:src="@drawable/toolbar_onbottom_home_icon" />
+        android:src="@drawable/tab_onbottom_home_icon" />
 
     <ImageButton
         android:id="@+id/toolbar_onBottom_imgBtn2"
@@ -25,7 +27,7 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:contentDescription="@string/contentDesciption_Gall"
-        android:src="@drawable/toolbar_onbottom_gallery_icon" />
+        android:src="@drawable/tab_onbottom_gallery_icon" />
 
     <ImageButton
         android:id="@+id/toolbar_onBottom_imgBtn3"
@@ -34,7 +36,7 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:contentDescription="@string/contentDesciption_Sear"
-        android:src="@drawable/toolbar_onbottom_search_icon" />
+        android:src="@drawable/tab_onbottom_search_icon" />
 
     <ImageButton
         android:id="@+id/toolbar_onBottom_imgBtn4"
@@ -43,7 +45,7 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:contentDescription="@string/contentDesciption_Nofi"
-        android:src="@drawable/toolbar_onbottom_notification_icon" />
+        android:src="@drawable/tab_onbottom_notification_icon" />
 
     <ImageButton
         android:id="@+id/toolbar_onBottom_imgBtn5"
@@ -52,5 +54,5 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:contentDescription="@string/contentDesciption_Prof"
-        android:src="@drawable/toolbar_onbottom_profile_icon" />
+        android:src="@drawable/tab_onbottom_profile_icon" />
 </LinearLayout>

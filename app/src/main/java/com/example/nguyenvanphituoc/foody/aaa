@@ -186,3 +186,20 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
         </LinearLayout>
     </TabHost>
  -----------------------------------------------------------------------------------------------------
+ public static FoodyHomePageFragment newInstance(String[] sendData) {
+         FoodyHomePageFragment fragment = new FoodyHomePageFragment();
+
+         final Bundle args = new Bundle(1);
+         args.putStringArray("sendData", sendData);
+         fragment.setArguments(args);
+         return fragment;
+     }
+---------------------------------------------------------------------------------------------------------
+
+        textView.setBackground(mContext.getResources().getDrawable(R.drawable.buttonleft_menu_style, null));
+        textView.setPadding(5, 3, 3, 5);
+        textView.setHeight(32);
+        textView.setBackgroundColor(mContext.getResources().getColor(+R.drawable.buttonleft_menu_style, null));
+        textView.setGravity(0x00000001 | 0x00000011);
+        textView.setText(mTab.getText());
+--------------------------------------------------------------------------------------------------------------

@@ -4,21 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/clGrey"
-    tools:context="com.example.nguyenvanphituoc.foody.Activity.Fragment.ToolbarCityFragment">
+    tools:context="com.example.nguyenvanphituoc.foody.Activity.Fragment.TabBarOnTopHome2Fragment">
 
     <ListView
-        android:id="@+id/listCity"
+        android:id="@+id/tabOnTopSimpleListView_List"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:background="@color/grey05"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:overScrollFooter="@color/blue2"/>
 
     <Button
-        android:id="@+id/txtCity"
+        android:id="@+id/tabOnTopSimpleListView_Txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_heavy"
         android:layout_alignBottom="@id/listCity"
         android:layout_alignParentBottom="true"
-        android:text="@string/contentDesciption_Prof" />
+        android:background="@drawable/button_background_style"
+        android:layout_alignEnd="@+id/tabOnTopSimpleListView_List"
+        android:text="@string/ACTION_CANCEL_EN"/>
 </RelativeLayout>

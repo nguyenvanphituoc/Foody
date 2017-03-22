@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 
 import com.example.nguyenvanphituoc.foody.R;
 
-public class ToolbarCategoriesFragment extends Fragment {
+public class TabBarOnTopHome3Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.toolbar_ontop_categories, container, false);
+        return inflater.inflate(R.layout.tab_ontop_feature, container, false);
 
     }
 }

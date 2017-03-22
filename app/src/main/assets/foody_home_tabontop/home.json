@@ -1,0 +1,168 @@
+{
+  "Categories": {
+    "data": [
+      {
+        "name": "american",
+        "img": "american.png"
+      },
+      {
+        "name": "bakery",
+        "img": "bakery.png"
+      },
+      {
+        "name": "bar_pub",
+        "img": "bar_pub.png"
+      },
+      {
+        "name": "beer_club",
+        "img": "beer_club.png"
+      },
+      {
+        "name": "bistro_cafeteria",
+        "img": "bistro_cafeteria.png"
+      },
+      {
+        "name": "boozer",
+        "img": "boozer.png"
+      },
+      {
+        "name": "buffet",
+        "img": "buffet.png"
+      },
+      {
+        "name": "catering",
+        "img": "catering.png"
+      },
+      {
+        "name": "chinese",
+        "img": "chinese.png"
+      },
+      {
+        "name": "coffee_desert",
+        "img": "coffee_desert.png"
+      },
+      {
+        "name": "food_court",
+        "img": "food_court.png"
+      },
+      {
+        "name": "french",
+        "img": "french.png"
+      },
+      {
+        "name": "german",
+        "img": "german.png"
+      },
+      {
+        "name": "indian",
+        "img": "indian.png"
+      },
+      {
+        "name": "international",
+        "img": "international.png"
+      },
+      {
+        "name": "italian",
+        "img": "italian.png"
+      },
+      {
+        "name": "japanese",
+        "img": "japanese.png"
+      },
+      {
+        "name": "korean",
+        "img": "korean.png"
+      },
+      {
+        "name": "luxury",
+        "img": "luxury.png"
+      },
+      {
+        "name": "malaysia",
+        "img": "malaysia.png"
+      },
+      {
+        "name": "office_lunch_delivery",
+        "img": "office_lunch_delivery.png"
+      },
+      {
+        "name": "restaurant",
+        "img": "restaurant.png"
+      },
+      {
+        "name": "shop_online",
+        "img": "shop_online.png"
+      },
+      {
+        "name": "spanish",
+        "img": "spanish.png"
+      },
+      {
+        "name": "street_food",
+        "img": "street_food.png"
+      },
+      {
+        "name": "thailand",
+        "img": "thailand.png"
+      },
+      {
+        "name": "usa",
+        "img": "usa.png"
+      },
+      {
+        "name": "vegetarian",
+        "img": "vegetarian.png"
+      },
+      {
+        "name": "italian",
+        "img": "vietnamese.png"
+      },
+      {
+        "name": "italian",
+        "img": "western.png"
+      }
+    ],
+    "path": "foody_home_tabontop/category"
+  },
+  "City": {
+    "data": [],
+    "path": "foody_home_tabontop/city"
+  },
+  "Lasted": {
+    "data": [
+      {
+        "name": "bank_card",
+        "img": "e_card.png"
+      },
+      {
+        "name": "e_card",
+        "img": "e_card.png"
+      },
+      {
+        "name": "for_tourist",
+        "img": "for_tourist.png"
+      },
+      {
+        "name": "lasted",
+        "img": "lasted.png"
+      },
+      {
+        "name": "most_reviewed",
+        "img": "most_reviewed.png"
+      },
+      {
+        "name": "order_delivery",
+        "img": "order_delivery.png"
+      },
+      {
+        "name": "reservation",
+        "img": "reservation.png"
+      },
+      {
+        "name": "nearby",
+        "img": "nearby.png"
+      }
+    ],
+    "path": "foody_home_tabontop/feature"
+  }
+}

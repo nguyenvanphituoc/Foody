@@ -3,11 +3,13 @@ package com.example.nguyenvanphituoc.foody.Adapter;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.nguyenvanphituoc.foody.R;
 
@@ -24,6 +26,7 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
     private LayoutInflater mInflater;
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
+
     public FragmentAdapter(FragmentManager fragmentManager, Context mContext) {
 
         super(fragmentManager);
@@ -42,13 +45,28 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public View getTabMainView(int position) {
+    public View getTabMainView(int position, TabLayout.Tab mTab) {
         // Given you have a custom layout in `res/layout/custom_tab.xml` with a TextView and ImageView
+        TextView textView ;
         if (position % 2 == 0) {
-            return mInflater.inflate(R.layout.toolbar_main_tab_tabplaces, null);
-        }
-        else
-            return mInflater.inflate(R.layout.toolbar_main_tab_tabfood, null);
+            textView = (TextView) mInflater.inflate(R.layout.tab_main_tabright, null);
+        } else
+            textView = (TextView) mInflater.inflate(R.layout.tab_main_tableft, null);
+        textView.setText(mTab.getText());
+        return textView;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public View getTabMainView(TabLayout.Tab mTab) {
+        // Given you have a custom layout in `res/layout/custom_tab.xml` with a TextView and ImageView
+        TextView textView = new TextView(mContext);
+        textView.setBackground(mContext.getResources().getDrawable(R.drawable.button_menu_simple, null));
+        textView.setPadding(5, 3, 3, 5);
+        textView.setHeight(72);
+        textView.setGravity(0x00000001 | 0x00000011);
+        textView.setTextSize(16);
+        textView.setText(mTab.getText());
+        return textView;
     }
 
     @Override

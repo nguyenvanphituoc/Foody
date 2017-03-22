@@ -4,5 +4,6 @@
     android:layout_height="32dp"
     android:background="@drawable/buttonright_menu_style"
     android:gravity="center_horizontal|center"
-    android:text="@string/FOODY_MENU_FOOD_VI"
-    android:textColor="@drawable/button_menu_colorstyle" />
+    android:paddingEnd="5dp"
+    android:paddingStart="5dp"
+    android:textColor="@drawable/button_menu_simple" />
