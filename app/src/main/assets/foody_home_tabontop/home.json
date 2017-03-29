@@ -2,6 +2,10 @@
   "Categories": {
     "data": [
       {
+        "name": "categories",
+        "img": ""
+      },
+      {
         "name": "american",
         "img": "american.png"
       },
@@ -114,11 +118,11 @@
         "img": "vegetarian.png"
       },
       {
-        "name": "italian",
+        "name": "vietnames",
         "img": "vietnamese.png"
       },
       {
-        "name": "italian",
+        "name": "western",
         "img": "western.png"
       }
     ],

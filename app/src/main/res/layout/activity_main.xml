@@ -26,9 +26,6 @@
         android:scrollbars="vertical"
         android:translationZ="6dp"
         tools:targetApi="lollipop" >
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
     </android.support.v4.view.ViewPager>
     <include
         android:id="@+id/tabbar_onBottom"

@@ -1,58 +1,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:background="#66ffffff"
-    android:gravity="center"
-    android:translationZ="6dp"
+    android:layout_height="64dp"
+    android:background="@color/white3"
     android:elevation="6dp"
+    android:gravity="center_vertical"
+    android:minHeight="48dp"
     android:orientation="horizontal"
+    android:translationZ="6dp"
     android:weightSum="5"
-    tools:targetApi="lollipop"
-    android:minHeight="48dp">
+    tools:targetApi="lollipop">
 
     <ImageButton
         android:id="@+id/toolbar_onBottom_imgBtn1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:layout_weight="1"
-        android:background="@android:color/transparent"
+        android:background="#00ffffff"
         android:contentDescription="@string/contentDesciption_News"
+        android:scaleType="fitXY"
         android:src="@drawable/tab_onbottom_home_icon" />
 
     <ImageButton
         android:id="@+id/toolbar_onBottom_imgBtn2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:layout_weight="1"
-        android:background="@android:color/transparent"
+        android:background="#00ffffff"
         android:contentDescription="@string/contentDesciption_Gall"
-        android:src="@drawable/tab_onbottom_gallery_icon" />
+        android:scaleType="fitXY"
+        android:src="@drawable/tab_onbottom_collect_icon" />
 
     <ImageButton
         android:id="@+id/toolbar_onBottom_imgBtn3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:layout_weight="1"
-        android:background="@android:color/transparent"
+        android:background="#00ffffff"
         android:contentDescription="@string/contentDesciption_Sear"
+        android:scaleType="fitXY"
         android:src="@drawable/tab_onbottom_search_icon" />
 
     <ImageButton
         android:id="@+id/toolbar_onBottom_imgBtn4"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:layout_weight="1"
-        android:background="@android:color/transparent"
+        android:background="#00ffffff"
         android:contentDescription="@string/contentDesciption_Nofi"
-        android:src="@drawable/tab_onbottom_notification_icon" />
+        android:scaleType="fitXY"
+        android:src="@drawable/tab_onbottom_notif_icon" />
 
     <ImageButton
         android:id="@+id/toolbar_onBottom_imgBtn5"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:layout_weight="1"
-        android:background="@android:color/transparent"
+        android:background="#00ffffff"
         android:contentDescription="@string/contentDesciption_Prof"
+        android:scaleType="fitXY"
         android:src="@drawable/tab_onbottom_profile_icon" />
 </LinearLayout>

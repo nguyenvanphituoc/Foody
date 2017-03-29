@@ -13,8 +13,7 @@
         android:layout_height="32dp"
         android:layout_gravity="center"
         android:scaleType="fitCenter"
-        android:contentDescription="@string/FOODY_TItlE"
-        android:src="@drawable/tab_onbottom_profile_icon"/>
+        android:contentDescription="@string/FOODY_TItlE"/>
 
     <TextView
         android:id="@+id/custom_inline_item_TextView"

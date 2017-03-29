@@ -9,10 +9,11 @@
         android:id="@+id/toolbar_main_imgBtnHome"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:background="@android:color/transparent"
+        android:minHeight="32dp"
         android:contentDescription="@string/HOME_BUTTON"/>
 
     <LinearLayout
@@ -37,10 +38,11 @@
         android:id="@+id/toolbar_main_imgBtnPlus"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:background="@android:color/transparent"
+        android:minHeight="32dp"
         android:contentDescription="@string/MENU_MORE"/>
 
 </LinearLayout>

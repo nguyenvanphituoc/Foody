@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.nguyenvanphituoc.foody.R;
@@ -65,6 +66,21 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
         textView.setHeight(72);
         textView.setGravity(0x00000001 | 0x00000011);
         textView.setTextSize(16);
+        textView.setText(mTab.getText());
+        return textView;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public View getTabOntopView(TabLayout.Tab mTab) {
+        // Given you have a custom layout in `res/layout/custom_tab.xml` with a TextView and ImageView
+        TextView textView = new TextView(mContext);
+        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null,
+                mContext.getDrawable(R.drawable.tab_ontop_text_icon));
+        textView.setCompoundDrawablePadding(5);
+        textView.setPadding(5, 0, 0, 5);
+        textView.setMinHeight(32);
+        textView.setGravity(0x00000001 | 0x00000011);
+        textView.setTextSize(14);
         textView.setText(mTab.getText());
         return textView;
     }

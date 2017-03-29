@@ -23,6 +23,7 @@
     <color name="blue25">#D9F7F2</color>
     <color name="grey05">#c9b5b5b5</color>
     <color name="white1">#FFFFFF</color> <!-- This is the border for the pressed button -->
+    <color name="white3">#ddffFFFF</color> <!-- This is the border for the pressed button -->
     <color name="white2">#DDDDDD</color>
     <color name="black42">#000000</color> <!-- This is for the pressed buttons -->
     <color name="drkgray3">#545454</color> <!-- This is for the lighter buttons -->

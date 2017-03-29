@@ -11,6 +11,9 @@ import android.support.annotation.ArrayRes;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,8 +25,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyPage1Fragment;
-import com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyPage2Fragment;
+import com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyNewsTabFragment;
 import com.example.nguyenvanphituoc.foody.Adapter.FragmentAdapter;
 import com.example.nguyenvanphituoc.foody.R;
 
@@ -33,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Context mContext;
@@ -87,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     //older click will return grey color
-                    changeImgColorFilter(res.getColor(R.color.grey05, null),
+                    changeImgColorFilter(res.getColor(android.R.color.transparent, null),
                             PorterDuff.Mode.SRC_ATOP, bottomToolbarStatus);
                     //clear toolbarMain and viewPaper
                     toolbarMain.removeAllViews();
@@ -189,19 +192,19 @@ public class MainActivity extends AppCompatActivity {
                 myModel = getJSONFromAsset("foody_home_tabontop/home.json");
                 sendData.putString("model", myModel);
                 initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_HOME),
-                      new String[]{FoodyPage1Fragment.class.getName(),
-                              FoodyPage2Fragment.class.getName()}, sendData);
+                        new String[]{FoodyNewsTabFragment.class.getName(),
+                                FoodyNewsTabFragment.class.getName()}, sendData);
                 break;
             case Gall:
                 initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_GALLERY),
-                        new String[]{FoodyPage1Fragment.class.getName(),
-                                FoodyPage2Fragment.class.getName()}, sendData);
+                        new String[]{FoodyNewsTabFragment.class.getName(),
+                                FoodyNewsTabFragment.class.getName()}, sendData);
                 break;
             case Sear:
                 break;
             case Noti:
                 initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_NOTI),
-                        new String[]{FoodyPage1Fragment.class.getName()}, sendData);
+                        new String[]{FoodyNewsTabFragment.class.getName()}, sendData);
                 break;
             case Prof:
                 break;
@@ -291,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0, n = toolbar_main_tab.getTabCount(); i < n; i++) {
                 TabLayout.Tab tab = toolbar_main_tab.getTabAt(i);
                 assert tab != null && tab.getText() != null;
-                //"com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyPage1Fragment"
+                //"com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyNewsTabFragment"
                 Class<?> clazz = Class.forName(fragmentMain[i]);
                 Fragment mainFragment = (Fragment) clazz.newInstance();
                 // send data to fragment
@@ -312,8 +315,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
 
 
     //--------------------------------------------------------------------------------------------------
@@ -360,5 +361,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         viewPageMain.setCurrentItem(savedInstanceState.getInt(TABLOAD_ONTOP_POSITION));
+    }
+
+    @Override
+    public void onBackPressed() {
+        // if there is a fragment and the back stack of this fragment is not empty,
+        // then emulate 'onBackPressed' behaviour, because in default, it is not working
+        FragmentManager fm = getSupportFragmentManager();
+        tab_onBottom.setElevation(100);
+        tab_onBottom.setTranslationZ(100);
+        int pos = viewPageMain.getCurrentItem();
+        List<Fragment> frags = fm.getFragments();
+        for(int i = 0, count = frags.size(); i < count; i++){
+            if(i == pos){
+                FragmentManager childFm = frags.get(i).getChildFragmentManager();
+                if (childFm.getBackStackEntryCount() > 0) {
+                    childFm.popBackStack();
+                    return;
+                }
+            }
+        }
+        super.onBackPressed();
     }
 }

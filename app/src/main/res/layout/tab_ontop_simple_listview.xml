@@ -11,19 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:scrollbars="vertical"
         android:background="@color/grey05"
         android:headerDividersEnabled="false"
         android:footerDividersEnabled="false"
         android:divider="@null"
-        android:dividerHeight="0dp"
-        android:overScrollFooter="@color/blue2"/>
+        android:dividerHeight="0dp"/>
 
     <Button
         android:id="@+id/tabOnTopSimpleListView_Txt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_heavy"
+        android:layout_height="32dp"
+        android:textSize="@dimen/text_size_small"
         android:layout_alignBottom="@id/listCity"
         android:layout_alignParentBottom="true"
         android:background="@drawable/button_background_style"
