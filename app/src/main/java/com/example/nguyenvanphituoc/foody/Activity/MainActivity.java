@@ -13,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             ImageButton mybtn = (ImageButton) findViewById(resID);
             mybtn.setOnClickListener(myTabBarOnrBottomClick());
         }
+       findViewById(R.id.toolbar_onBottom_imgBtn1).performClick();
     }
 
     //....second inner funcClick change color and create view respond
@@ -303,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
                 mainFragment.onCreate(sendData);
                 //
                 adapter.addFragment(mainFragment, tab.getText().toString());
+                //
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (n > 1)
                         tab.setCustomView(adapter.getTabMainView(i, tab));
@@ -368,14 +371,14 @@ public class MainActivity extends AppCompatActivity {
         // if there is a fragment and the back stack of this fragment is not empty,
         // then emulate 'onBackPressed' behaviour, because in default, it is not working
         FragmentManager fm = getSupportFragmentManager();
-        tab_onBottom.setElevation(100);
-        tab_onBottom.setTranslationZ(100);
         int pos = viewPageMain.getCurrentItem();
         List<Fragment> frags = fm.getFragments();
         for(int i = 0, count = frags.size(); i < count; i++){
             if(i == pos){
                 FragmentManager childFm = frags.get(i).getChildFragmentManager();
                 if (childFm.getBackStackEntryCount() > 0) {
+                    tab_onBottom.setElevation(100);
+                    tab_onBottom.setTranslationZ(100);
                     childFm.popBackStack();
                     return;
                 }

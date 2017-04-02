@@ -3,7 +3,7 @@
     android:id="@+id/custom_inline_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/custom_toast"
+    android:background="@color/clGrey"
     android:gravity="center|fill_horizontal"
     android:orientation="horizontal">
 
@@ -12,19 +12,19 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_gravity="center"
-        android:scaleType="fitCenter"
-        android:contentDescription="@string/FOODY_TItlE"/>
+        android:contentDescription="@string/FOODY_TItlE"
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/custom_inline_item_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         android:gravity="center_horizontal|center"
         android:paddingEnd="5dp"
         android:paddingStart="10dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
         android:textColor="@color/clBlack"
         android:textSize="@dimen/text_size_small" />
 

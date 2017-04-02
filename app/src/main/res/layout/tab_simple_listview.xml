@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/clGrey">
+    
+    <ListView
+        android:id="@+id/tabOnTopSimpleListView_List"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:background="@color/clGrey"
+        android:cacheColorHint="@color/clGrey"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"/>
+
+    <Button
+        android:id="@+id/tabOnTopSimpleListView_Txt"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_alignBottom="@id/tabOnTopSimpleListView_List"
+        android:layout_alignEnd="@+id/tabOnTopSimpleListView_List"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_background_style"
+        android:text="@string/ACTION_CANCEL_EN"
+        android:textSize="@dimen/text_size_small" />
+</RelativeLayout>

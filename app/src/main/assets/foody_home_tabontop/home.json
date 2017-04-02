@@ -6,123 +6,123 @@
         "img": ""
       },
       {
-        "name": "american",
+        "name": "American",
         "img": "american.png"
       },
       {
-        "name": "bakery",
+        "name": "Bakery",
         "img": "bakery.png"
       },
       {
-        "name": "bar_pub",
+        "name": "Bar pub",
         "img": "bar_pub.png"
       },
       {
-        "name": "beer_club",
+        "name": "Beer club",
         "img": "beer_club.png"
       },
       {
-        "name": "bistro_cafeteria",
+        "name": "Bistro Cafeteria",
         "img": "bistro_cafeteria.png"
       },
       {
-        "name": "boozer",
+        "name": "Boozer",
         "img": "boozer.png"
       },
       {
-        "name": "buffet",
+        "name": "Buffet",
         "img": "buffet.png"
       },
       {
-        "name": "catering",
+        "name": "Catering",
         "img": "catering.png"
       },
       {
-        "name": "chinese",
+        "name": "Chinese",
         "img": "chinese.png"
       },
       {
-        "name": "coffee_desert",
+        "name": "Coffee Desert",
         "img": "coffee_desert.png"
       },
       {
-        "name": "food_court",
+        "name": "Food Court",
         "img": "food_court.png"
       },
       {
-        "name": "french",
+        "name": "French",
         "img": "french.png"
       },
       {
-        "name": "german",
+        "name": "German",
         "img": "german.png"
       },
       {
-        "name": "indian",
+        "name": "Indian",
         "img": "indian.png"
       },
       {
-        "name": "international",
+        "name": "International",
         "img": "international.png"
       },
       {
-        "name": "italian",
+        "name": "Italian",
         "img": "italian.png"
       },
       {
-        "name": "japanese",
+        "name": "Japanese",
         "img": "japanese.png"
       },
       {
-        "name": "korean",
+        "name": "Korean",
         "img": "korean.png"
       },
       {
-        "name": "luxury",
+        "name": "Luxury",
         "img": "luxury.png"
       },
       {
-        "name": "malaysia",
+        "name": "Malaysia",
         "img": "malaysia.png"
       },
       {
-        "name": "office_lunch_delivery",
+        "name": "Office Lunch Delivery",
         "img": "office_lunch_delivery.png"
       },
       {
-        "name": "restaurant",
+        "name": "Restaurant",
         "img": "restaurant.png"
       },
       {
-        "name": "shop_online",
+        "name": "Shop online",
         "img": "shop_online.png"
       },
       {
-        "name": "spanish",
+        "name": "Spanish",
         "img": "spanish.png"
       },
       {
-        "name": "street_food",
+        "name": "Street food",
         "img": "street_food.png"
       },
       {
-        "name": "thailand",
+        "name": "Thailand",
         "img": "thailand.png"
       },
       {
-        "name": "usa",
+        "name": "Usa",
         "img": "usa.png"
       },
       {
-        "name": "vegetarian",
+        "name": "Vegetarian",
         "img": "vegetarian.png"
       },
       {
-        "name": "vietnames",
+        "name": "Vietnamese",
         "img": "vietnamese.png"
       },
       {
-        "name": "western",
+        "name": "Western",
         "img": "western.png"
       }
     ],
@@ -135,35 +135,36 @@
   "Lasted": {
     "data": [
       {
-        "name": "bank_card",
+        "name": "Bank card",
         "img": "e_card.png"
       },
       {
-        "name": "e_card",
+        "name": "E card",
         "img": "e_card.png"
       },
       {
-        "name": "for_tourist",
+        "name": "For tourist",
         "img": "for_tourist.png"
       },
       {
-        "name": "lasted",
+        "name": "Lasted",
         "img": "lasted.png"
       },
       {
-        "name": "most_reviewed",
+        "name": "Most reviewed",
         "img": "most_reviewed.png"
       },
       {
-        "name": "order_delivery",
-        "img": "order_delivery.png"
+        "name": "Order delivery",
+        "img": "order_delivery.png",
+        "stt":"new"
       },
       {
-        "name": "reservation",
+        "name": "Reservation",
         "img": "reservation.png"
       },
       {
-        "name": "nearby",
+        "name": "Nearby",
         "img": "nearby.png"
       }
     ],

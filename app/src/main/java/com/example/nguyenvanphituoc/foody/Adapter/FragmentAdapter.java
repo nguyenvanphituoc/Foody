@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -27,17 +28,24 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
     private LayoutInflater mInflater;
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
+    private  FragmentManager mManager;
 
     public FragmentAdapter(FragmentManager fragmentManager, Context mContext) {
 
         super(fragmentManager);
         this.mContext = mContext;
         this.mInflater = LayoutInflater.from(mContext);
+        this.mManager = fragmentManager;
     }
 
     @Override
     public Fragment getItem(int position) {
         return mFragmentList.get(position);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
     }
 
     public void addFragment(Fragment fragment, String title) {
