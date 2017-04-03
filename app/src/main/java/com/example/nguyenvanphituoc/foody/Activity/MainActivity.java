@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         switch (bottomToolbarStatus) {
             case News:
                 myModel = getJSONFromAsset("foody_home_tabontop/home.json");
-                sendData.putString("model", myModel);
+//                sendData.putString("model", myModel);
                 initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_HOME),
                         new String[]{FoodyNewsTabFragment.class.getName(),
                                 FoodyNewsTabFragment.class.getName()}, sendData);

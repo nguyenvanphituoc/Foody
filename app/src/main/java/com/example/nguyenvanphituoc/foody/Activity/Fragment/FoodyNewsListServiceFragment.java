@@ -32,7 +32,7 @@ import java.util.Iterator;
  */
 
 public class FoodyNewsListServiceFragment extends Fragment {
-    String model;
+//    String model;
     String tabName;
     ListView myListView;
     Button btnBackStack;
@@ -50,7 +50,7 @@ public class FoodyNewsListServiceFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            model = savedInstanceState.getString("model");
+//            model = savedInstanceState.getString("model");
             tabName = savedInstanceState.getString("tabName");
             mCallback = (SendDataFromChildFragment) savedInstanceState.getSerializable("fragment");
         }
@@ -127,55 +127,5 @@ public class FoodyNewsListServiceFragment extends Fragment {
                 return;
             }
         }
-    }
-
-    private JSONObject findDataName(String tabName, int[] o) {
-        try {
-            //obj -> obj{3} -> {dataArray -> obj{nameString, imageString}, pathString}
-            JSONObject obj = new JSONObject(model);
-            Iterator keys = obj.keys();
-            while (keys.hasNext()) {
-                String dynamicKey = (String) keys.next();
-                //obj 3
-                JSONObject line = obj.getJSONObject(dynamicKey);
-                //dataArray
-                JSONArray m_JsonArray = line.getJSONArray("data");
-                for (int i = 0; i < m_JsonArray.length(); i++) {
-                    //obj{nameString, imageString}
-                    JSONObject jo_inside = m_JsonArray.getJSONObject(i);
-                    String name = jo_inside.getString("name");
-                    if (name.toLowerCase().equals(tabName.toLowerCase())) {
-                        o[0] = (i);// position choose
-                        return line;
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    private ArrayList<ServiceModel> getDataFromModel(JSONObject obj) {
-        try {
-            JSONArray m_jArray = obj.getJSONArray("data");
-            String path = obj.getString("path");
-            ArrayList<ServiceModel> formList = new ArrayList<>();
-            for (int i = 0; i < m_jArray.length(); i++) {
-                JSONObject jo_inside = m_jArray.getJSONObject(i);
-                String name = jo_inside.getString("name");
-                String img = jo_inside.getString("img");
-                String stt = "";
-                if (jo_inside.has("stt"))
-                    stt = jo_inside.getString("stt");
-                //Add your values in your `ArrayList` as below:
-                ServiceModel categoriesModel = new ServiceModel(name, path + "/" + img, stt);
-                formList.add(categoriesModel);
-            }
-            return formList;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

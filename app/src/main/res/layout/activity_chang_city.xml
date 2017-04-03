@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="20dp"
+    tools:targetApi="lollipop">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar_main"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/clRed"
+        android:elevation="10dp"
+        android:minHeight="?attr/actionBarSize"
+        tools:targetApi="lollipop">
+        <ImageButton
+            android:id="@+id/toolbar_main_imgBtnHome"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@android:color/transparent"
+            android:minHeight="32dp"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="@string/HOME_BUTTON"/>
+
+        <ImageButton
+            android:id="@+id/toolbar_main_imgBtnPlus"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:minHeight="32dp"
+            android:contentDescription="@string/MENU_MORE"/>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pagerMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolBar_main"
+        android:elevation="6dp"
+        android:scrollbars="vertical"
+        android:translationZ="6dp"
+        tools:targetApi="lollipop" >
+    </android.support.v4.view.ViewPager>
+</RelativeLayout>

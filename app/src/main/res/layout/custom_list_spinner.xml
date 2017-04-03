@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_layerlist_devider_footer">
+
+        <TextView
+            android:id="@+id/city_text_left"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="Hồ Chí minh"
+            android:textSize="@dimen/text_size_small" />
+
+        <Button
+            android:id="@+id/city_btn_right"
+            android:layout_width="100dp"
+            android:layout_height="32dp"
+            android:layout_alignEnd="@id/city_text_left"
+            android:layout_alignParentEnd="true"
+            android:drawableEnd="@drawable/ic_chevron_right_grey"
+            android:gravity="center_vertical"
+            android:text="change city"
+            android:textSize="@dimen/text_size_super_small" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/city_expand_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

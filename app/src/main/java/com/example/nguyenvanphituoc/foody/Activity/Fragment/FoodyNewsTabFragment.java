@@ -19,6 +19,9 @@ import android.widget.Toast;
 
 import com.example.nguyenvanphituoc.foody.Adapter.FragmentAdapter;
 import com.example.nguyenvanphituoc.foody.Interface.SendDataFromChildFragment;
+import com.example.nguyenvanphituoc.foody.Model.CityModel;
+import com.example.nguyenvanphituoc.foody.Model.DistrictModel;
+import com.example.nguyenvanphituoc.foody.Model.WardModel;
 import com.example.nguyenvanphituoc.foody.R;
 
 import java.io.Serializable;
@@ -32,7 +35,7 @@ import java.util.List;
 public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildFragment, Serializable {
     private String[] tabName;
     private FrameLayout displayViewContainer;
-    private String model;
+//    private String model;
     private ViewGroup tabOnBottom;
     private List<String> listFragment = new ArrayList<>();
     private TabLayout.Tab clickedTab;
@@ -50,12 +53,17 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
     }
 
     @Override
+    public void sendAddress(int city, String district, String ward) {
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        assert savedInstanceState != null;
         if (savedInstanceState != null) {
             tabName = savedInstanceState.getStringArray("tab");
-            model = savedInstanceState.getString("model");
+//            model = savedInstanceState.getString("model");
         }
     }
 
@@ -85,7 +93,7 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
             }
             //
             String[] listFragmentName = {FoodyNewsListServiceFragment.class.getName(),
-                    FoodyNewsListCategoriesFragment.class.getName()};
+                    FoodyNewsListCategoriesFragment.class.getName(), FoodyNewsListCityFragment.class.getName()};
             //
             for (int i = 0, n = ontopTabBar.getTabCount(); i < n; i++) {
                 listFragment.add(listFragmentName[i % listFragmentName.length]);
@@ -142,7 +150,7 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
             Class<?> clazz = Class.forName(fragmentName);
             Fragment mainFragment = (Fragment) clazz.newInstance();
             Bundle sendData = new Bundle();
-            sendData.putString("model", model);
+//            sendData.putString("model", model);
             sendData.putString("tabName", tabName);
             sendData.putSerializable("fragment", this);
             mainFragment.onCreate(sendData);

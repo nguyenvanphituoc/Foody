@@ -131,6 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     public SQLiteDatabase getMyDataBase() {
+        openDataBase();
         return myDataBase;
     }
 
