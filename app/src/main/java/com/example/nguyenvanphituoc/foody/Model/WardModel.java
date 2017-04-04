@@ -18,6 +18,7 @@ public class WardModel implements Serializable {
     private String name;
     private static final String TABLE_NAME = "foody_ward";
     public DistrictModel districtModel;
+    public ArrayList<DistrictModel> districtModels = new ArrayList<>();
     public WardModel(int city_id, String district_name, String name) {
         this.city_id = city_id;
         this.district_name = district_name;

@@ -17,6 +17,7 @@ public class CategoriesModel implements Serializable {
     private String pathImg;
     private byte[] blobImg;
     private String stt;
+    public ArrayList<DistrictModel> districtModels = new ArrayList<>();
     private static final String TABLE_NAME = "foody_category";
 
     public CategoriesModel(String name, String pathImg, String status) {

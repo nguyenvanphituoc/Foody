@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.nguyenvanphituoc.foody.Adapter.FragmentAdapter;
 import com.example.nguyenvanphituoc.foody.Interface.SendDataFromChildFragment;
+import com.example.nguyenvanphituoc.foody.Interface.SendDataToChildFragment;
 import com.example.nguyenvanphituoc.foody.Model.CityModel;
 import com.example.nguyenvanphituoc.foody.Model.DistrictModel;
 import com.example.nguyenvanphituoc.foody.Model.WardModel;
@@ -40,7 +41,9 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
     private List<String> listFragment = new ArrayList<>();
     private TabLayout.Tab clickedTab;
     private WardModel ward;
-
+    private TabLayout onTopTab;
+    // send data to child fragment
+    private Fragment displayFragment;
     @Override
     public void sendTabName(String name) {
         if (name != null) {
@@ -51,6 +54,10 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
             ((TextView) v).setTextColor(getResources().getColor(R.color.clRed, null));
             if (name.contains("categories"))
                 ((TextView) v).setTextColor(getResources().getColor(R.color.clBlack, null));
+
+            ((SendDataToChildFragment) displayFragment).sendToChild(onTopTab.getTabAt(0).getText().toString(), onTopTab.getTabAt(1).getText().toString());
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            displayFragment.onCreateView(inflater, displayViewContainer ,null);
         }
     }
 
@@ -75,14 +82,14 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
         View mView = inflater.inflate(R.layout.inflate_tab_onbottom_news, null, false);
         this.displayViewContainer = (FrameLayout) mView.findViewById(R.id.main_view_layout);
         tabOnBottom = (ViewGroup) ((View) container.getParent()).findViewById(R.id.tabbar_onBottom);
-        initialOnTopTab(mView);
+        onTopTab = initialOnTopTab(mView);
         initFragment(FoodyNewsDisplayFragment.class.getName());
         return mView;
     }
 
     // create toolbar ontop
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void initialOnTopTab(View v) {
+    private TabLayout initialOnTopTab(View v) {
         TabLayout ontopTabBar = (TabLayout) v.findViewById(R.id.tab_ontop);
         try {
             FragmentAdapter fragmentAdapter = new FragmentAdapter(getFragmentManager(), getContext());
@@ -100,7 +107,6 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
             for (int i = 0, n = ontopTabBar.getTabCount(); i < n; i++) {
                 listFragment.add(listFragmentName[i % listFragmentName.length]);
             }
-
             ontopTabBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(@NonNull TabLayout.Tab LayoutTab) {
@@ -123,9 +129,11 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
                     doTabChange(clickedTab.getPosition(), clickedTab.getText().toString());
                 }
             });
+            return ontopTabBar;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return  null;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -133,11 +141,15 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
         addFragment(listFragment.get(position), tabName);
     }
 
+    //main fragment to display
     private void initFragment(String fragmentName) {
 
         try {
             Class<?> clazz = Class.forName(fragmentName);
             Fragment mainFragment = (Fragment) clazz.newInstance();
+            //store child fragment to display and send data to
+            displayFragment = mainFragment;
+            ((SendDataToChildFragment) displayFragment).sendToChild(onTopTab.getTabAt(0).getText().toString(), onTopTab.getTabAt(1).getText().toString());
             FragmentManager fragmentManager = getChildFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.add(displayViewContainer.getId(), mainFragment);
@@ -147,6 +159,7 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
         }
     }
 
+    //fragment display when click ontop tablayout
     private void addFragment(String fragmentName, String tabName) {
         try {
             Class<?> clazz = Class.forName(fragmentName);

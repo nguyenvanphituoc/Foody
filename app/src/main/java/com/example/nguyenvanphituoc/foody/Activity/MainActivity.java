@@ -41,12 +41,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     Context mContext;
     Resources res;
-    //
+    //main components of activity
     Toolbar toolbarMain;
     ViewPager viewPageMain;
     ViewGroup tab_onBottom;
-    //
+    //purpose to save screen
     public static String TABLOAD_ONTOP_POSITION = "POSITION";
+    // five status of button bottom
     static private OnBottomStatus bottomToolbarStatus = OnBottomStatus.News;
 
     private enum OnBottomStatus {
@@ -243,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
         return json;
     }
 
-
+    // get two main tablayout, and in one of tablayout has ontop tablayout to display so we need 2d String array
     private String[][] getResourceOnBottom(@ArrayRes int arrayId) {
         TypedArray myTypedArray = res.obtainTypedArray(arrayId);
         String[][] myTab_TopToolbar = new String[myTypedArray.length()][];
@@ -313,6 +314,7 @@ public class MainActivity extends AppCompatActivity {
                         tab.setCustomView(adapter.getTabMainView(tab));
                 }
             }
+            // binding tablayout
             viewPager.setAdapter(adapter);
         } catch (Exception e) {
             e.printStackTrace();

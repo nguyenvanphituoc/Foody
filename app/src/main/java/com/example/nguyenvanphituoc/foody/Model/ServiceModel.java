@@ -19,6 +19,7 @@ public class ServiceModel implements Serializable {
     private String pathImg;
     private byte[] blobImg;
     private String stt;
+    public ArrayList<DistrictModel> districtModels = new ArrayList<>();
     private static final String TABLE_NAME = "foody_service";
 
     public ServiceModel(String name, String pathImg, String status) {
