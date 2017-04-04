@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.example.nguyenvanphituoc.foody.R;
 
-public class ChangCityActivity extends AppCompatActivity {
+public class ChangeCityActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chang_city);
+        setContentView(R.layout.activity_change_city);
     }
 }

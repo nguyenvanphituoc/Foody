@@ -119,6 +119,7 @@ public class FoodyNewsListCategoriesFragment extends Fragment {
                 return;
             }
         }
+        o[0] = -1;
     }
 
     private JSONObject findDataName(String tabName, int[] position) {

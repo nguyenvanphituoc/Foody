@@ -1,5 +1,7 @@
 package com.example.nguyenvanphituoc.foody.Activity.Fragment;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
 import com.example.nguyenvanphituoc.foody.Interface.SendDataFromChildFragment;
+import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
 import com.example.nguyenvanphituoc.foody.Model.CityModel;
 import com.example.nguyenvanphituoc.foody.Model.DistrictModel;
 import com.example.nguyenvanphituoc.foody.Model.ServiceModel;
@@ -31,18 +34,19 @@ import java.util.Arrays;
  */
 
 public class FoodyNewsListCityFragment extends Fragment {
-    String tabName;
+    //    String tabName;
     Button btnBackStack;
     TextView txtCity;
     Button btnChangeCity;
     LinearLayout myListView;
     Fragment myFragment;
-    SendDataFromChildFragment mCallback;
+    WardModel myWard;
+    SendDataFromChildFragment myCallback;
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallback = null;
+        myCallback = null;
     }
 
 
@@ -50,8 +54,9 @@ public class FoodyNewsListCityFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            tabName = savedInstanceState.getString("tabName");
-            mCallback = (SendDataFromChildFragment) savedInstanceState.getSerializable("fragment");
+//            tabName = savedInstanceState.getString("tabName");
+            myWard = (WardModel) savedInstanceState.get("ward");
+            myCallback = (SendDataFromChildFragment) savedInstanceState.getSerializable("fragment");
         }
         myFragment = this;
     }
@@ -75,9 +80,11 @@ public class FoodyNewsListCityFragment extends Fragment {
         int city_id = Integer.parseInt((String) txtCity.getTag());
         DatabaseHandler db = new DatabaseHandler(getContext());
         CityModel city = InitialDataOfCity(db, city_id);
-
+        if (myWard == null) myWard = new WardModel(city_id, null, null);
         txtCity.setText(city.getName());
-        txtCity.setOnClickListener(textChooseClicked(txtCity.getText().toString()));
+        if (myWard.getDistrict_name() == null && myWard.getName() == null)
+            txtCity.setTextColor(getResources().getColor(R.color.clRed, null));
+        txtCity.setOnClickListener(textChooseClicked(txtCity.getText().toString(), new WardModel(city.getId(), null, null)));
 
         btnChangeCity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,57 +95,81 @@ public class FoodyNewsListCityFragment extends Fragment {
 
         for (final DistrictModel district : city.districtModels) {
             final View view = inflater.inflate(R.layout.custom_list_spinner, null, false);
-            TextView tv = (TextView) view.findViewById(R.id.city_text_left);
-            Button btn = (Button) view.findViewById(R.id.city_btn_right);
+            final TextView tv = (TextView) view.findViewById(R.id.city_text_left);
+            final Button btn = (Button) view.findViewById(R.id.city_btn_right);
 
             tv.setText(district.getName());
-            tv.setTag(district.getCity_id());
-            tv.setOnClickListener(textChooseClicked(tv.getText().toString()));
+            if (myWard.getDistrict_name() != null && myWard.getName() == null && tv.getText().equals(myWard.getDistrict_name()))
+                tv.setTextColor(getResources().getColor(R.color.clRed, null));
+
+            tv.setOnClickListener(textChooseClicked(tv.getText().toString(), new WardModel(city.getId(), district.getName(), null)));
 
             String countWard = Integer.toString(district.wardModels.size()) + " streets";
-
+            //
+            final ListView expandList = (ListView) view.findViewById(R.id.city_expand_list);
+            String[] list = new String[district.wardModels.size()];
+            for (int i = 0, n = district.wardModels.size(); i < n; i++)
+                list[i] = district.wardModels.get(i).getName();
+            final ArrayList<String> strings = new ArrayList<>();
+            strings.addAll(Arrays.asList(list));
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1
+                    , strings);
+            expandList.setAdapter(adapter);
+            expandList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    myCallback.sendTabName(((TextView) view).getText().toString());
+                    myCallback.sendAddress(district.getCity_id(), district.getName(), district.wardModels.get(position).getName());
+                    btnBackStack.performClick();
+                }
+            });
+            ViewGroup.LayoutParams params = expandList.getLayoutParams();
+            params.height = 0;
+            expandList.setLayoutParams(params);
+            //
             btn.setText(countWard);
             btn.setTag("click");
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ListView expandList = (ListView) view.findViewById(R.id.city_expand_list);
-
                     String stt = (String) v.getTag();
                     if (stt.equals("click")) {
-                        String[] list = new String[district.wardModels.size()];
-                        for (int i = 0, n = district.wardModels.size(); i < n; i++)
-                            list[i] = district.wardModels.get(i).getName();
-                        ArrayList<String> strings = new ArrayList<>();
-                        strings.addAll(Arrays.asList(list));
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1
-                                , strings);
-                        expandList.setAdapter(adapter);
-                        expandList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                mCallback.sendTabName(((TextView)view).getText().toString());
-                                btnBackStack.performClick();
-                            }
-                        });
+                        UIUtils.setListViewHeightBasedOnItems(expandList);
                         v.setTag("clicked");
                     } else if (stt.equals("clicked")) {
-                        expandList.setAdapter(null);
+                        ViewGroup.LayoutParams params = expandList.getLayoutParams();
+                        params.height = 0;
+                        expandList.setLayoutParams(params);
                         v.setTag("click");
                     }
-                    UIUtils.setListViewHeightBasedOnItems(expandList);
+
                 }
             });
+
+            if (myWard.getName() != null) {
+                final int[] position = new int[1];
+                findDataName(strings, myWard.getName(), position);
+                if (position[0] != -1) {
+                    expandList.setSelection(position[0]);
+                    View templateV = getViewByPosition(position[0], expandList);
+                    TextView txt = (TextView) templateV;
+                    txt.setTextColor(new ColorStateList(new int[][]{new int[]{android.R.attr.state_enabled}}
+                            , new int[]{Color.RED}));
+                    btn.performClick();
+                }
+            }
+
             myListView.addView(view);
         }
         return viewContent;
     }
 
-    public View.OnClickListener textChooseClicked(final String name){
+    public View.OnClickListener textChooseClicked(final String name, final WardModel ward) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.sendTabName(name);
+                myCallback.sendTabName(name);
+                myCallback.sendAddress(ward.getCity_id(), ward.getDistrict_name(), ward.getName());
                 btnBackStack.performClick();
             }
         };
@@ -158,6 +189,17 @@ public class FoodyNewsListCityFragment extends Fragment {
         return city;
     }
 
+    private void findDataName(ArrayList<String> listData, String Name, int[] o) {
+        for (int i = 0, n = listData.size(); i < n; i++) {
+            String data = listData.get(i);
+            if (data.equals(Name)) {
+                o[0] = i;
+                return;
+            }
+        }
+        o[0] = -1;
+    }
+
     public View getViewByPosition(int pos, ListView listView) {
         final int firstListItemPosition = listView.getFirstVisiblePosition();
         final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
@@ -169,15 +211,4 @@ public class FoodyNewsListCityFragment extends Fragment {
             return listView.getChildAt(childIndex);
         }
     }
-
-    private void findDataName(ArrayList<ServiceModel> listData, String Name, int[] o) {
-        for (int i = 0, n = listData.size(); i < n; i++) {
-            ServiceModel data = listData.get(i);
-            if (data.getName().equals(Name)) {
-                o[0] = i;
-                return;
-            }
-        }
-    }
-
 }

@@ -127,5 +127,6 @@ public class FoodyNewsListServiceFragment extends Fragment {
                 return;
             }
         }
+        o[0] = -1;
     }
 }

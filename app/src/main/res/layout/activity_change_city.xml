@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="20dp"
+    android:orientation="vertical"
     tools:targetApi="lollipop">
 
     <android.support.v7.widget.Toolbar
@@ -15,37 +16,55 @@
         android:elevation="10dp"
         android:minHeight="?attr/actionBarSize"
         tools:targetApi="lollipop">
-        <ImageButton
+
+        <TextView
             android:id="@+id/toolbar_main_imgBtnHome"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/HOME_BUTTON"
+            android:drawableStart="@drawable/ic_arrow_back"
             android:minHeight="32dp"
-            android:src="@drawable/ic_arrow_back"
-            android:contentDescription="@string/HOME_BUTTON"/>
+            android:text="Choose Province/City"
+            android:textColor="@color/clWhite" />
 
-        <ImageButton
+        <TextView
             android:id="@+id/toolbar_main_imgBtnPlus"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="32dp"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="end"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:minHeight="32dp"
-            android:contentDescription="@string/MENU_MORE"/>
+            android:text="DONE"
+            android:textColor="@color/clWhite"
+            android:textSize="@dimen/text_size_heavy" />
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pagerMain"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_devider_footer"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Quick search"
+            android:textColorHint="@color/drkgray3" />
+    </LinearLayout>
+
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolBar_main"
-        android:elevation="6dp"
-        android:scrollbars="vertical"
-        android:translationZ="6dp"
-        tools:targetApi="lollipop" >
-    </android.support.v4.view.ViewPager>
-</RelativeLayout>
+        android:divider="@color/clBlack"
+        android:dividerHeight="1dp" />
+</LinearLayout>

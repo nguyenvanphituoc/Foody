@@ -1,5 +1,7 @@
 package com.example.nguyenvanphituoc.foody.Interface;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.example.nguyenvanphituoc.foody.Model.CityModel;
@@ -12,5 +14,5 @@ import com.example.nguyenvanphituoc.foody.Model.WardModel;
 
 public interface SendDataFromChildFragment {
     void sendTabName(String name);
-    void sendAddress(final int city, final String district, final String ward);
+    void sendAddress(@NonNull final int city,@Nullable final String district,@Nullable final String ward);
 }

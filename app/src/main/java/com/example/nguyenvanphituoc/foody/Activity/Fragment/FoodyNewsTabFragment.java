@@ -35,26 +35,28 @@ import java.util.List;
 public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildFragment, Serializable {
     private String[] tabName;
     private FrameLayout displayViewContainer;
-//    private String model;
+    //    private String model;
     private ViewGroup tabOnBottom;
     private List<String> listFragment = new ArrayList<>();
     private TabLayout.Tab clickedTab;
+    private WardModel ward;
+
     @Override
     public void sendTabName(String name) {
-        if(name != null) {
+        if (name != null) {
             clickedTab.setText(name);
             View v = clickedTab.getCustomView();
             assert v != null;
             ((TextView) v).setText(name);
             ((TextView) v).setTextColor(getResources().getColor(R.color.clRed, null));
-            if(name.contains("categories"))
+            if (name.contains("categories"))
                 ((TextView) v).setTextColor(getResources().getColor(R.color.clBlack, null));
         }
     }
 
     @Override
-    public void sendAddress(int city, String district, String ward) {
-
+    public void sendAddress(@NonNull int city, String district, String ward) {
+        this.ward = new WardModel(city, district, ward);
     }
 
     @Override
@@ -153,6 +155,8 @@ public class FoodyNewsTabFragment extends Fragment implements SendDataFromChildF
 //            sendData.putString("model", model);
             sendData.putString("tabName", tabName);
             sendData.putSerializable("fragment", this);
+            if (ward != null)
+                sendData.putSerializable("ward", this.ward);
             mainFragment.onCreate(sendData);
             FragmentManager fragmentManager = getChildFragmentManager();
 
