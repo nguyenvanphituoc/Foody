@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -59,12 +60,17 @@ public class FoodyNewsListDisplayAdapter extends ArrayAdapter<DisplayModel> {
 
             if (model.getImage() != null) {
 //                Drawable drawable = getDrawableFromAsset(places.getPathImg());
-                viewHolder.imgDisplay.setImageBitmap(getBitmapFromByte(model.getImage()));
+                Bitmap myBitmap = getBitmapFromByte(model.getImage());
+                viewHolder.imgDisplay.setImageBitmap(myBitmap);
 //                viewHolder.imageView.setImageDrawable(getDrawableFromAsset(places.getPathImg()));
             }
-            viewHolder.textName.setText(model.getName() + "-" + model.categoriesModel.getName());
-            viewHolder.textAddress.setText(model.wardModel.districtModel.cityModel.getId() + " " + model.getAddress());
-            viewHolder.textRating.setText(String.format(Locale.US, "%f", model.getRating()));
+            viewHolder.textName.setText(model.getName() + "-" + model.getCategory_name());
+            viewHolder.textAddress.setText(model.getCity_name() + " " + model.getAddress());
+            String rating = String.format(Locale.US, "%.1f", model.getRating());
+            viewHolder.textRating.setText(rating);
+            if(model.getRating() > 5)
+                viewHolder.textRating.setBackgroundColor(Color.GREEN);
+            else  viewHolder.textRating.setBackgroundColor(Color.RED);
             convertView.setBackground(mContext.getResources().getDrawable(R.color.clGrey, null));
         }
         return convertView;

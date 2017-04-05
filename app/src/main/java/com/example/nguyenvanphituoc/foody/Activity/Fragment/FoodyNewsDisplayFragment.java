@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * Created by Admin on 3/26/2017.
  */
 
-public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChildFragment{
+public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChildFragment {
     ListView myListView;
     String category;
     String service;
@@ -43,27 +43,25 @@ public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChil
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.inflate_onbottom_news_display, container, false);
-//        myListView = (ListView) contentView.findViewById(R.id.display_listview);
-//
-//
-//        ArrayList<DisplayModel> listData = InitialData(service, category);
-//
-//        if (listData == null || listData.size() == 0) return null;
-//        ArrayAdapter<DisplayModel> adapter = new FoodyNewsListDisplayAdapter(getContext(), listData);
-//        myListView.setAdapter(adapter);
-////        UIUtils.setListViewHeightBasedOnItems(myListView);
-//        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(),"CLicked", Toast.LENGTH_SHORT);
-//            }
-//        });
-//
-
-        return  contentView;
+        myListView = (ListView) contentView.findViewById(R.id.display_listview);
+        ArrayList<DisplayModel> listData = InitialData(service, category);
+        ArrayAdapter<DisplayModel> adapter;
+        if (listData == null || listData.size() == 0)
+            adapter = new FoodyNewsListDisplayAdapter(getContext(), DisplayModel.getAllPlaces(new DatabaseHandler(getContext())));
+        else
+            adapter = new FoodyNewsListDisplayAdapter(getContext(), listData);
+        myListView.setAdapter(adapter);
+        UIUtils.setListViewHeightBasedOnItems(myListView);
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), "CLicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return contentView;
     }
 
-    private ArrayList<DisplayModel> InitialData(String service, String category){
+    private ArrayList<DisplayModel> InitialData(String service, String category) {
         return DisplayModel.getAllPlaces(new DatabaseHandler(getContext()), service, category);
     }
 }

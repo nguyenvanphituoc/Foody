@@ -106,7 +106,7 @@ public class FoodyNewsListCityFragment extends Fragment {
             final Button btn = (Button) view.findViewById(R.id.city_btn_right);
             //if we click district text change name to district is high light
             tv.setText(district.getName());
-               if (myWard.getDistrict_name() != null && myWard.getName() == null && tv.getText().equals(myWard.getDistrict_name()))
+            if (myWard.getDistrict_name() != null && myWard.getName() == null && tv.getText().equals(myWard.getDistrict_name()))
                 tv.setTextColor(getResources().getColor(R.color.clRed, null));
             //when click send data to main tab
             tv.setOnClickListener(textChooseClicked(tv.getText().toString(), new WardModel(city.getId(), district.getName(), null)));
@@ -122,6 +122,22 @@ public class FoodyNewsListCityFragment extends Fragment {
             final ArrayList<String> strings = new ArrayList<>();
             strings.addAll(Arrays.asList(list));
             expandList.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings) {
+                @Override
+                public int getCount() {
+                    return strings.size();
+                }
+
+                // important!!!
+                @Override
+                public int getViewTypeCount() {
+                    return getCount();
+                }
+
+                @Override
+                public int getItemViewType(int position) {
+                    return position;
+                }
+
                 @NonNull
                 @Override
                 public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -165,7 +181,7 @@ public class FoodyNewsListCityFragment extends Fragment {
                 }
             });
             //check high light if the street is clicked before
-            if (myWard.getName() != null) {
+            if (district.getName().equals(myWard.getDistrict_name()) && myWard.getName() != null) {
                 final int[] position = new int[1];
                 findDataName(strings, myWard.getName(), position);
                 if (position[0] != -1) {
@@ -193,6 +209,7 @@ public class FoodyNewsListCityFragment extends Fragment {
             }
         };
     }
+
     // find all data of city id
     public CityModel InitialDataOfCity(DatabaseHandler db, int city_id) {
         CityModel city = CityModel.getCityById(db, city_id);
@@ -207,6 +224,7 @@ public class FoodyNewsListCityFragment extends Fragment {
         }
         return city;
     }
+
     // get position of list data
     private void findDataName(ArrayList<String> listData, String Name, int[] o) {
         for (int i = 0, n = listData.size(); i < n; i++) {
