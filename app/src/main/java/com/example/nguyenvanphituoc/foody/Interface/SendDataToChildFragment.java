@@ -5,5 +5,5 @@ package com.example.nguyenvanphituoc.foody.Interface;
  */
 
 public interface SendDataToChildFragment  {
-    void sendToChild(String service, String category);
+    void sendToChild(String service, String category, String ward);
 }

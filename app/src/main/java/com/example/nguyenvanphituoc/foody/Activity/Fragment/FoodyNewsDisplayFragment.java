@@ -30,13 +30,24 @@ import java.util.ArrayList;
 
 public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChildFragment {
     ListView myListView;
-    String category;
-    String service;
-
+    String category = "";
+    String service = "";
+    String ward = "";
     @Override
-    public void sendToChild(String service, String category) {
+    public void sendToChild(String service, String category, String ward) {
         this.service = service;
         this.category = category;
+        this.ward = ward;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState != null) {
+            service = savedInstanceState.getString("service");
+            category = savedInstanceState.getString("category");
+            ward = savedInstanceState.getString("ward");
+        }
     }
 
     @Nullable
@@ -44,12 +55,12 @@ public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChil
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.inflate_onbottom_news_display, container, false);
         myListView = (ListView) contentView.findViewById(R.id.display_listview);
-        ArrayList<DisplayModel> listData = InitialData(service, category);
+        ArrayList<DisplayModel> listData = InitialData();
         ArrayAdapter<DisplayModel> adapter;
-        if (listData == null || listData.size() == 0)
+//        if (listData == null || listData.size() == 0)
             adapter = new FoodyNewsListDisplayAdapter(getContext(), DisplayModel.getAllPlaces(new DatabaseHandler(getContext())));
-        else
-            adapter = new FoodyNewsListDisplayAdapter(getContext(), listData);
+//        else
+//            adapter = new FoodyNewsListDisplayAdapter(getContext(), listData);
         myListView.setAdapter(adapter);
         UIUtils.setListViewHeightBasedOnItems(myListView);
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,7 +72,7 @@ public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChil
         return contentView;
     }
 
-    private ArrayList<DisplayModel> InitialData(String service, String category) {
-        return DisplayModel.getAllPlaces(new DatabaseHandler(getContext()), service, category);
+    private ArrayList<DisplayModel> InitialData() {
+        return DisplayModel.getAllPlaces(new DatabaseHandler(getContext()), service, category, ward);
     }
 }

@@ -153,12 +153,14 @@ public class DisplayModel {
         return lisAll;
     }
 
-    static public ArrayList<DisplayModel> getAllPlaces(DatabaseHandler databaseHandler, String service, String category) {
+    static public ArrayList<DisplayModel> getAllPlaces(DatabaseHandler databaseHandler, String service, String category, String ward) {
         ArrayList<DisplayModel> lisAll = new ArrayList<>();
-        String tableGet = TABLE_NAME+".";
+        String tableGet = TABLE_NAME + ".";
 
-        String query = "SELECT * FROM " + TABLE_NAME + " where " + tableGet +"service_name == '" + service +"' and "+
-                tableGet+ "category_name == '" +category+ "'";
+        String query = "SELECT * FROM " + TABLE_NAME + " where " + tableGet + "service_name LIKE '%" + service + "%' and " +
+                tableGet + "category_name LIKE '%" + category + "%' and " +
+                tableGet + "street_name LIKE '%" + ward + "%'";
+
         SQLiteDatabase myDataBase = databaseHandler.getMyDataBase();
         Cursor cursor = myDataBase.rawQuery(query, null);//selectQuery,selectedArguments
 

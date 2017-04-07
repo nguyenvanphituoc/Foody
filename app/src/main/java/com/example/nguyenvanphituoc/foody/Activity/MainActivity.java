@@ -12,9 +12,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +23,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyNewsTabFragment;
+import com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyNewsTabListFragment;
 import com.example.nguyenvanphituoc.foody.Adapter.FragmentAdapter;
 import com.example.nguyenvanphituoc.foody.R;
 
@@ -195,19 +192,19 @@ public class MainActivity extends AppCompatActivity {
                 myModel = getJSONFromAsset("foody_home_tabontop/home.json");
 //                sendData.putString("model", myModel);
                 initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_HOME),
-                        new String[]{FoodyNewsTabFragment.class.getName(),
-                                FoodyNewsTabFragment.class.getName()}, sendData);
+                        new String[]{FoodyNewsTabListFragment.class.getName(),
+                                FoodyNewsTabListFragment.class.getName()}, sendData);
                 break;
             case Gall:
                 initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_GALLERY),
-                        new String[]{FoodyNewsTabFragment.class.getName(),
-                                FoodyNewsTabFragment.class.getName()}, sendData);
+                        new String[]{FoodyNewsTabListFragment.class.getName(),
+                                FoodyNewsTabListFragment.class.getName()}, sendData);
                 break;
             case Sear:
                 break;
             case Noti:
                 initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_NOTI),
-                        new String[]{FoodyNewsTabFragment.class.getName()}, sendData);
+                        new String[]{FoodyNewsTabListFragment.class.getName()}, sendData);
                 break;
             case Prof:
                 break;
@@ -297,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0, n = toolbar_main_tab.getTabCount(); i < n; i++) {
                 TabLayout.Tab tab = toolbar_main_tab.getTabAt(i);
                 assert tab != null && tab.getText() != null;
-                //"com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyNewsTabFragment"
+                //"com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyNewsTabListFragment"
                 Class<?> clazz = Class.forName(fragmentMain[i]);
                 Fragment mainFragment = (Fragment) clazz.newInstance();
                 // send data to fragment
