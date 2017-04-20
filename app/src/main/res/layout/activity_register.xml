@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/personbackground"
+    android:orientation="vertical"
+    tools:context="com.example.nguyenvanphituoc.foody.Activity.RegisterActivity">
+
+    <EditText
+        android:id="@+id/perUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:background="@android:color/transparent"
+        android:drawableBottom="@drawable/bottom_edittext_line"
+        android:hint="User Name"
+        android:textColor="@color/clGrey"
+        android:textColorHint="@color/clGrey" />
+
+    <EditText
+        android:id="@+id/perPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/perUser"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:background="@android:color/transparent"
+        android:drawableBottom="@drawable/bottom_edittext_line"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColor="@color/clGrey"
+        android:textColorHint="@color/clGrey" />
+
+    <EditText
+        android:id="@+id/perConfirmPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/perPass"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:background="@android:color/transparent"
+        android:drawableBottom="@drawable/bottom_edittext_line"
+        android:hint="Confirm password"
+        android:inputType="textPassword"
+        android:textColor="@color/clGrey"
+        android:textColorHint="@color/clGrey" />
+
+    <EditText
+        android:id="@+id/perName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/perConfirmPass"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:background="@android:color/transparent"
+        android:drawableBottom="@drawable/bottom_edittext_line"
+        android:hint="Display name"
+        android:textColor="@color/clGrey"
+        android:textColorHint="@color/clGrey" />
+
+    <Button
+        android:id="@+id/perRegister"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_below="@id/perName"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:background="#55D1D1DD"
+        android:text="Register"
+        android:textColor="@color/clGrey" />
+
+    <Button
+        android:id="@+id/perLogin"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_alignParentBottom="true"
+        android:background="#55D1D1DD"
+        android:text="Login"
+        android:textColor="@color/clGrey" />
+</RelativeLayout>

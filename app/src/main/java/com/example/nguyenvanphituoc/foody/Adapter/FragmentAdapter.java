@@ -69,7 +69,7 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
     public View getTabMainView(TabLayout.Tab mTab) {
         // Given you have a custom layout in `res/layout/custom_tab.xml` with a TextView and ImageView
         TextView textView = new TextView(mContext);
-        textView.setBackground(mContext.getResources().getDrawable(R.drawable.button_menu_simple, null));
+        textView.setTextColor(mContext.getResources().getColor(R.color.clGrey, null));
         textView.setPadding(5, 3, 3, 5);
         textView.setHeight(72);
         textView.setGravity(0x00000001 | 0x00000011);

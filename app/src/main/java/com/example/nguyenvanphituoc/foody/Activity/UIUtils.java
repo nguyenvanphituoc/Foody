@@ -1,11 +1,17 @@
 package com.example.nguyenvanphituoc.foody.Activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import org.jetbrains.annotations.Contract;
 
 /**
  * Created by PhiTuocPC on 3/31/2017.
@@ -49,29 +55,29 @@ public class UIUtils {
             return false;
         }
     }
-    public static boolean setLinearHeightBasedOnItems(LinearLayout listView) {
-        if (listView != null) {
 
-            int numberOfItems = listView.getChildCount();
+    @NonNull
+    public static byte[] ParseStringtoByte(String s){
 
-            // Get total height of all items.
-            int totalItemsHeight = 0;
-            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
-                View item = listView.getChildAt(itemPos);
-                item.measure(0, 0);
-                totalItemsHeight += item.getMeasuredHeight();
-            }
+        return s.getBytes();
+    }
 
-            // Get total height of all item dividers.
-            int totalDividersHeight = totalItemsHeight + totalItemsHeight/numberOfItems * 2;
+    @Contract("_ -> !null")
+    public static String ParseByteToString(byte[]  bytes){
 
-            // Set list height.
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalItemsHeight + totalDividersHeight;
-            listView.setLayoutParams(params);
-            return true;
-        } else {
-            return false;
+        return new String(bytes);
+    }
+
+    @Nullable
+    private Bitmap getBitmapFromByte(byte[] blob) {
+
+        try {
+
+            return BitmapFactory.decodeByteArray(blob, 0, blob.length);
+        } catch (Exception e) {
+
+            e.printStackTrace();
         }
+        return null;
     }
 }
