@@ -15,15 +15,11 @@ import android.widget.TextView;
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.Adapter.FoodyNewsListCategoriesAdapter;
 import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
-import com.example.nguyenvanphituoc.foody.Interface.SendDataFromChildFragment;
+import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
 import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
 import com.example.nguyenvanphituoc.foody.R;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Admin on 3/26/2017.
@@ -35,7 +31,7 @@ public class FoodyNewsListCategoriesFragment extends Fragment {
     ListView myListView;
     Button btnBackStack;
     Fragment myFragment;
-    SendDataFromChildFragment mCallback;
+    GetDataFromChildFragment mCallback;
 
     @Override
     public void onDetach() {
@@ -49,7 +45,7 @@ public class FoodyNewsListCategoriesFragment extends Fragment {
         if (savedInstanceState != null) {
 //            model = savedInstanceState.getString("model");
             tabName = savedInstanceState.getString("tabName");
-            mCallback = (SendDataFromChildFragment) savedInstanceState.getSerializable("fragment");
+            mCallback = (GetDataFromChildFragment) savedInstanceState.getSerializable("fragment");
         }
         myFragment = this;
     }
@@ -62,39 +58,39 @@ public class FoodyNewsListCategoriesFragment extends Fragment {
         myListView = (ListView) viewContent.findViewById(R.id.tabOnTopSimpleListView_List);
         myListView.setBackground(getResources().getDrawable(R.color.grey05, null));
 
-        final int[] position = new int[1];
-        ArrayList<CategoriesModel> listData = CategoriesModel.getAllCategory(new DatabaseHandler(getContext()));
-        findDataName(listData, tabName, position);
-
-        if (listData == null) return null;
-        ArrayAdapter<CategoriesModel> adapter = new FoodyNewsListCategoriesAdapter(getContext(), listData);
-        myListView.setAdapter(adapter);
-        UIUtils.setListViewHeightBasedOnItems(myListView);
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView txt = (TextView) view.findViewById(R.id.custom_inline_item_TextView);
-                mCallback.sendTabName(txt.getText().toString());
-                btnBackStack.performClick();
-            }
-        });
-        myListView.post(new Runnable() {
-            @Override
-            public void run() {
-                if(position[0] == -1)
-                    return;
-                myListView.setSelection(position[0]);
-                View view = getViewByPosition(position[0], myListView);
-                TextView txt = (TextView) view.findViewById(R.id.custom_inline_item_TextView);
-                txt.setTextColor(getResources().getColor(R.color.clRed, null));
-            }
-        });
-        btnBackStack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myFragment.getActivity().onBackPressed();
-            }
-        });
+//        final int[] position = new int[1];
+//        ArrayList<CategoriesModel> listData = CategoriesModel.getAllCategory(new DatabaseHandler(getContext()));
+//        findDataName(listData, tabName, position);
+//
+//        if (listData == null) return null;
+//        ArrayAdapter<CategoriesModel> adapter = new FoodyNewsListCategoriesAdapter(getContext(), listData);
+//        myListView.setAdapter(adapter);
+//        UIUtils.setListViewHeightBasedOnItems(myListView);
+//        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                TextView txt = (TextView) view.findViewById(R.id.custom_inline_item_TextView);
+//                mCallback.getTabName(txt.getText().toString());
+//                btnBackStack.performClick();
+//            }
+//        });
+//        myListView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                if(position[0] == -1)
+//                    return;
+//                myListView.setSelection(position[0]);
+//                View view = getViewByPosition(position[0], myListView);
+//                TextView txt = (TextView) view.findViewById(R.id.custom_inline_item_TextView);
+//                txt.setTextColor(getResources().getColor(R.color.clRed, null));
+//            }
+//        });
+//        btnBackStack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                myFragment.getActivity().onBackPressed();
+//            }
+//        });
 
         return viewContent;
     }
@@ -121,54 +117,4 @@ public class FoodyNewsListCategoriesFragment extends Fragment {
         }
         o[0] = -1;
     }
-
-//    private JSONObject findDataName(String tabName, int[] position) {
-//        try {
-//            //obj -> obj{3} -> {dataArray -> obj{nameString, imageString}, pathString}
-//            JSONObject obj = new JSONObject(model);
-//            Iterator keys = obj.keys();
-//            while (keys.hasNext()) {
-//                String dynamicKey = (String) keys.next();
-//                //obj 3
-//                JSONObject line = obj.getJSONObject(dynamicKey);
-//                //dataArray
-//                JSONArray m_JsonArray = line.getJSONArray("data");
-//                for (int i = 0; i < m_JsonArray.length(); i++) {
-//                    //obj{nameString, imageString}
-//                    JSONObject jo_inside = m_JsonArray.getJSONObject(i);
-//                    String name = jo_inside.getString("name");
-//                    if (name.toLowerCase().equals(tabName.toLowerCase())) {
-//                        position[0] = i;
-//                        return line;
-//                    }
-//                }
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//        return null;
-//    }
-
-//    private ArrayList<CategoriesModel> getDataFromModel(JSONObject obj) {
-//        try {
-//            JSONArray m_jArray = obj.getJSONArray("data");
-//            String path = obj.getString("path");
-//            ArrayList<CategoriesModel> formList = new ArrayList<>();
-//            for (int i = 0; i < m_jArray.length(); i++) {
-//                JSONObject jo_inside = m_jArray.getJSONObject(i);
-//                String name = jo_inside.getString("name");
-//                String img = jo_inside.getString("img");
-//                String stt = "";
-//                if (jo_inside.has("stt"))
-//                    stt = jo_inside.getString("stt");
-//                //Add your values in your `ArrayList` as below:
-//                CategoriesModel categoriesModel = new CategoriesModel(name, path + "/" + img, stt);
-//                formList.add(categoriesModel);
-//            }
-//            return formList;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 }

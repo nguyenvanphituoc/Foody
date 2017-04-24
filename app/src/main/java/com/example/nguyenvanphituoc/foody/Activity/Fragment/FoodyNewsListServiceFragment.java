@@ -17,15 +17,11 @@ import android.widget.TextView;
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.Adapter.FoodyNewsListServiceAdapter;
 import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
-import com.example.nguyenvanphituoc.foody.Interface.SendDataFromChildFragment;
+import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
 import com.example.nguyenvanphituoc.foody.Model.ServiceModel;
 import com.example.nguyenvanphituoc.foody.R;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by PhiTuocPC on 3/31/2017.
@@ -37,7 +33,7 @@ public class FoodyNewsListServiceFragment extends Fragment {
     ListView myListView;
     Button btnBackStack;
     Fragment myFragment;
-    SendDataFromChildFragment mCallback;
+    GetDataFromChildFragment mCallback;
 
     @Override
     public void onDetach() {
@@ -52,7 +48,7 @@ public class FoodyNewsListServiceFragment extends Fragment {
         if (savedInstanceState != null) {
 //            model = savedInstanceState.getString("model");
             tabName = savedInstanceState.getString("tabName");
-            mCallback = (SendDataFromChildFragment) savedInstanceState.getSerializable("fragment");
+            mCallback = (GetDataFromChildFragment) savedInstanceState.getSerializable("fragment");
         }
         myFragment = this;
     }
@@ -79,7 +75,7 @@ public class FoodyNewsListServiceFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView txt = (TextView) view.findViewById(R.id.custom_inline_item_TextView);
-                mCallback.sendTabName(txt.getText().toString());
+                mCallback.getTabName(txt.getText().toString());
                 btnBackStack.performClick();
             }
         });

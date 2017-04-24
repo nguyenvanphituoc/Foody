@@ -196,15 +196,15 @@ public class MainActivity extends AppCompatActivity {
                                 FoodyNewsTabListFragment.class.getName()}, sendData);
                 break;
             case Gall:
-                initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_GALLERY),
-                        new String[]{FoodyNewsTabListFragment.class.getName(),
-                                FoodyNewsTabListFragment.class.getName()}, sendData);
+//                initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_GALLERY),
+//                        new String[]{FoodyNewsTabListFragment.class.getName(),
+//                                FoodyNewsTabListFragment.class.getName()}, sendData);
                 break;
             case Sear:
                 break;
             case Noti:
-                initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_NOTI),
-                        new String[]{FoodyNewsTabListFragment.class.getName()}, sendData);
+//                initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_NOTI),
+//                        new String[]{FoodyNewsTabListFragment.class.getName()}, sendData);
                 break;
             case Prof:
                 break;
@@ -228,11 +228,6 @@ public class MainActivity extends AppCompatActivity {
                 out.append(line);
             }
             reader.close();
-//            int size = is.available();
-//            byte[] buffer = new byte[size];
-//            is.read(buffer);
-//            is.close();
-//
             json = out.toString();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -299,7 +294,6 @@ public class MainActivity extends AppCompatActivity {
                 Fragment mainFragment = (Fragment) clazz.newInstance();
                 // send data to fragment
                 sendData.putStringArray("tab", mainTabData[i]);
-                mainFragment.setArguments(sendData);
                 mainFragment.onCreate(sendData);
                 //
                 adapter.addFragment(mainFragment, tab.getText().toString());

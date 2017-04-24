@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,21 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.example.nguyenvanphituoc.foody.DAO.ServiceCaller;
+import com.example.nguyenvanphituoc.foody.DAO.ServiceIF;
+import com.example.nguyenvanphituoc.foody.Interface.GetDataFromService;
+import com.example.nguyenvanphituoc.foody.Model.DisplayModel;
+
 import org.jetbrains.annotations.Contract;
+
+import java.util.List;
 
 /**
  * Created by PhiTuocPC on 3/31/2017.
  */
 
 public class UIUtils {
+    //hanlde global resources
     /**
      * Sets ListView height dynamically based on the height of the items.
      *
@@ -68,8 +77,12 @@ public class UIUtils {
         return new String(bytes);
     }
 
+    public static byte[] getByteFromBase64(String base64){
+        return Base64.decode(base64, Base64.DEFAULT);
+    }
+
     @Nullable
-    private Bitmap getBitmapFromByte(byte[] blob) {
+    public Bitmap getBitmapFromByte(byte[] blob) {
 
         try {
 

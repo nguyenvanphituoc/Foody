@@ -16,7 +16,7 @@ import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.Adapter.FoodyNewsListCategoriesAdapter;
 import com.example.nguyenvanphituoc.foody.Adapter.FoodyNewsListServiceAdapter;
 import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
-import com.example.nguyenvanphituoc.foody.Interface.SendDataFromChildFragment;
+import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
 import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
 import com.example.nguyenvanphituoc.foody.Model.ServiceModel;
 import com.example.nguyenvanphituoc.foody.R;

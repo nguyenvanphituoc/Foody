@@ -12,7 +12,8 @@ import com.example.nguyenvanphituoc.foody.Model.WardModel;
  * Created by PhiTuocPC on 4/2/2017.
  */
 
-public interface SendDataFromChildFragment {
-    void sendTabName(String name);
-    void sendAddress(@NonNull final int city,@Nullable final String district,@Nullable final String ward);
+public interface GetDataFromChildFragment {
+    void getTabName(String name);
+    void getAddress(final int city,@Nullable final String district,@Nullable final String ward);
+
 }

@@ -15,6 +15,7 @@ import java.util.List;
  */
 
 public class ServiceModel implements Serializable {
+    private int id;
     private String name;
     private String pathImg;
     private byte[] blobImg;
@@ -32,6 +33,14 @@ public class ServiceModel implements Serializable {
         this.name = name;
         this.blobImg = blobImg;
         this.stt = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public byte[] getBlobImg() {

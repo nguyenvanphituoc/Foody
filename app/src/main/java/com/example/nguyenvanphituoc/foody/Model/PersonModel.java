@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by PhiTuocPC on 4/19/2017.
  */
 
-public class Person {
+public class PersonModel {
     private int id;
     private String fullName;
     private String email;
@@ -18,11 +18,11 @@ public class Person {
     private String user;
     private String pass;
 
-    public Person() {
+    public PersonModel() {
 
     }
 
-    public Person(int id, String fullName, String description) {
+    public PersonModel(int id, String fullName, String description) {
         this.id = id;
         this.fullName = fullName;
         this.description = description;

@@ -1,6 +1,7 @@
 package com.example.nguyenvanphituoc.foody.Activity.Fragment;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,10 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nguyenvanphituoc.foody.Adapter.FragmentAdapter;
-import com.example.nguyenvanphituoc.foody.Interface.SendDataFromChildFragment;
+import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
 import com.example.nguyenvanphituoc.foody.Interface.SendDataToChildFragment;
-import com.example.nguyenvanphituoc.foody.Model.CityModel;
-import com.example.nguyenvanphituoc.foody.Model.DistrictModel;
 import com.example.nguyenvanphituoc.foody.Model.WardModel;
 import com.example.nguyenvanphituoc.foody.R;
 
@@ -33,7 +32,7 @@ import java.util.List;
  * Created by Admin on 3/16/2017.
  */
 
-public class FoodyNewsTabListFragment extends Fragment implements SendDataFromChildFragment, Serializable {
+public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChildFragment, Serializable {
     private String[] tabName;
     private FrameLayout displayViewContainer;
     //    private String model;
@@ -46,7 +45,7 @@ public class FoodyNewsTabListFragment extends Fragment implements SendDataFromCh
     private Fragment displayFragment;
 
     @Override
-    public void sendTabName(String name) {
+    public void getTabName(String name) {
         if (name != null) {
             clickedTab.setText(name);
             View v = clickedTab.getCustomView();
@@ -56,16 +55,19 @@ public class FoodyNewsTabListFragment extends Fragment implements SendDataFromCh
             if (name.contains("categories"))
                 ((TextView) v).setTextColor(getResources().getColor(R.color.clBlack, null));
 
-            ((SendDataToChildFragment) displayFragment).sendToChild(onTopTab.getTabAt(0).getText() != null?  onTopTab.getTabAt(0).getText().toString() : "",
-                    onTopTab.getTabAt(1).getText() != null?  onTopTab.getTabAt(1).getText().toString() : "",
-                    onTopTab.getTabAt(2).getText() != null?  onTopTab.getTabAt(2).getText().toString() : "");
+
+            Bundle senData = new Bundle();
+            senData.putString("service", onTopTab.getTabAt(0).getText() != null?  onTopTab.getTabAt(0).getText().toString() : "");
+            senData.putString("category", onTopTab.getTabAt(1).getText() != null?  onTopTab.getTabAt(1).getText().toString() : "");
+            senData.putString("ward", onTopTab.getTabAt(2).getText() != null?  onTopTab.getTabAt(2).getText().toString() : "");
+            ((SendDataToChildFragment) displayFragment).sendBundleToChild(senData);
             LayoutInflater inflater = getActivity().getLayoutInflater();
             displayFragment.onCreateView(inflater, displayViewContainer, null);
         }
     }
 
     @Override
-    public void sendAddress(@NonNull int city, String district, String ward) {
+    public void getAddress(int city, String district, String ward) {
         this.ward = new WardModel(city, district, ward);
     }
 
@@ -154,7 +156,13 @@ public class FoodyNewsTabListFragment extends Fragment implements SendDataFromCh
             senData.putString("service", "lasted");
             senData.putString("category", "");
             senData.putString("ward", "");
-            mainFragment.onCreate(senData);
+            if(mainFragment instanceof  SendDataToChildFragment){
+                ((SendDataToChildFragment) mainFragment).sendACKInitialData();
+                while (((SendDataToChildFragment) mainFragment).getWaitingACK()){
+                    Thread.sleep(1*1000);
+                }
+                ((SendDataToChildFragment) mainFragment).sendBundleToChild(senData);
+            }
             //store child fragment to display and send data to
             displayFragment = mainFragment;
             FragmentManager fragmentManager = getChildFragmentManager();

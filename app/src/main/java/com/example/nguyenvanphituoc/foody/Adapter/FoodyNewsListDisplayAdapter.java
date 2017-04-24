@@ -68,7 +68,9 @@ public class FoodyNewsListDisplayAdapter extends ArrayAdapter<DisplayModel> {
 //                viewHolder.imageView.setImageDrawable(getDrawableFromAsset(places.getPathImg()));
             }
             viewHolder.textName.setText(model.getName() + "-" + model.getCategory_name());
-            viewHolder.textAddress.setText(model.getCity_name() + " " + model.getAddress());
+
+            String address = model.getCity_name() + "-" + model.getDistrict_name() + "-" + model.getWard_name();
+            viewHolder.textAddress.setText(address);
             String rating = String.format(Locale.US, "%.1f", model.getRating());
             viewHolder.textRating.setText(rating);
             if(model.getRating() > 5)

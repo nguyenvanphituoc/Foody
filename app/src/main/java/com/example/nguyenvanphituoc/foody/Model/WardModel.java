@@ -13,43 +13,53 @@ import java.util.ArrayList;
  */
 
 public class WardModel implements Serializable {
-    private int city_id;
-    private String district_name;
-    private String name;
+    private int id;
+    private String city;
+    private String district;
+    private String street;
     private static final String TABLE_NAME = "foody_ward";
     public DistrictModel districtModel;
     public ArrayList<DistrictModel> districtModels = new ArrayList<>();
     public WardModel(int city_id, String district_name, String name) {
-        this.city_id = city_id;
-        this.district_name = district_name;
-        this.name = name;
+        this.id = city_id;
+        this.district = district_name;
+        this.street = name;
     }
 
     public WardModel(){}
 
-    public int getCity_id() {
-        return city_id;
+    public int getId() {
+        return id;
     }
 
-    public void setCity_id(int city_id) {
-        this.city_id = city_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getDistrict_name() {
-        return district_name;
+    public String getCity() {
+        return city;
     }
 
-    public void setDistrict_name(String district_name) {
-        this.district_name = district_name;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getName() {
-        return name;
+    public String getDistrict() {
+        return district;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDistrict(String district) {
+        this.district = district;
     }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
     static public ArrayList<WardModel> getAllWard(DatabaseHandler databaseHandler) {
         ArrayList<WardModel> lisAll = new ArrayList<>();
         String query = "SELECT * FROM " + TABLE_NAME;

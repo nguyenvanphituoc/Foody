@@ -1,9 +1,6 @@
 package com.example.nguyenvanphituoc.foody.Model;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
+import org.ksoap2.serialization.PropertyInfo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,23 +10,28 @@ import java.util.ArrayList;
  */
 
 public class CategoriesModel implements Serializable {
+    private int id;
     private String name;
-    private String pathImg;
     private byte[] blobImg;
     private String stt;
     public ArrayList<DistrictModel> districtModels = new ArrayList<>();
     private static final String TABLE_NAME = "foody_category";
 
-    public CategoriesModel(String name, String pathImg, String status) {
-        this.name = name;
-        this.pathImg = pathImg;
-        this.stt = status;
+    public CategoriesModel() {
     }
 
     public CategoriesModel(String name, byte[] blobImg, String status) {
         this.name = name;
         this.blobImg = blobImg;
         this.stt = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public byte[] getBlobImg() {
@@ -48,14 +50,6 @@ public class CategoriesModel implements Serializable {
         this.name = name;
     }
 
-    public String getPathImg() {
-        return pathImg;
-    }
-
-    public void setPathImg(String pathImg) {
-        this.pathImg = pathImg;
-    }
-
     public String getStt() {
         return stt;
     }
@@ -64,38 +58,72 @@ public class CategoriesModel implements Serializable {
         this.stt = stt;
     }
 
-    public boolean insertService(DatabaseHandler databaseHandler) {
-        return false;
-    }
-
-    public boolean updateService(DatabaseHandler databaseHandler) {
-        return false;
-    }
-
-    public boolean deleteService(DatabaseHandler databaseHandler) {
-        return false;
-    }
-
-    static public ArrayList<CategoriesModel> getAllCategory(DatabaseHandler databaseHandler) {
-        ArrayList<CategoriesModel> lisAll = new ArrayList<>();
-        String query = "SELECT * FROM " + TABLE_NAME;
-        SQLiteDatabase myDataBase = databaseHandler.getMyDataBase();
-        Cursor cursor = myDataBase.rawQuery(query, null);//selectQuery,selectedArguments
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                String name = cursor.getString(1);
-                byte[] pathImg = cursor.getBlob(2);
-                String stt = cursor.getString(3);
-                CategoriesModel model = new CategoriesModel(name, pathImg, stt);
-                lisAll.add(model);
-            } while (cursor.moveToNext());
+    public void setProperty(int index, Object value) {
+        switch (index) {
+            case 0:
+                id = Integer.parseInt(value.toString());
+                break;
+            case 1:
+                name = value.toString();
+                break;
+            case 2:
+                blobImg = (byte[]) value;
+                break;
+            case 3:
+                stt = value.toString();
+                break;
+            default:
+                break;
         }
-        // closing connection
-        cursor.close();
-        myDataBase.close();
+    }
 
-        return lisAll;
+    public Object getPropertyInfo(String index) {
+        String tmp = index.trim().toLowerCase();
+        PropertyInfo pi = new PropertyInfo();
+
+        switch (tmp) {
+            case "id":
+                pi.setName("id");
+                pi.setValue(this.getId());
+                pi.setType(Integer.TYPE);
+                return pi;
+            case "name":
+                pi.setName("name");
+                pi.setValue(this.getName());
+                pi.setType(this.getName().getClass());
+                return pi;
+            case "image":
+                pi.setName("image");
+                pi.setValue(this.getBlobImg());
+                pi.setType(Byte.TYPE);
+                return pi;
+            case "status":
+                pi.setName("status");
+                pi.setValue(this.getStt());
+                pi.setType(this.getStt().getClass());
+                return pi;
+            default:
+                return null;
+        }
+    }
+
+    public void setProperty(String index, Object value) {
+        String tmp = index.trim().toLowerCase();
+        switch (tmp) {
+            case "id":
+                id = Integer.parseInt(value.toString());
+                break;
+            case "name":
+                name = value.toString();
+                break;
+            case "image":
+                blobImg = (byte[]) value;
+                break;
+            case "status":
+                stt = value.toString();
+                break;
+            default:
+                break;
+        }
     }
 }

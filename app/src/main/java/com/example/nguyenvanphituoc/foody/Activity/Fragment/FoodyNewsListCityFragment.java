@@ -1,8 +1,6 @@
 package com.example.nguyenvanphituoc.foody.Activity.Fragment;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,11 +18,9 @@ import android.widget.TextView;
 
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
-import com.example.nguyenvanphituoc.foody.Interface.SendDataFromChildFragment;
-import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
+import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
 import com.example.nguyenvanphituoc.foody.Model.CityModel;
 import com.example.nguyenvanphituoc.foody.Model.DistrictModel;
-import com.example.nguyenvanphituoc.foody.Model.ServiceModel;
 import com.example.nguyenvanphituoc.foody.Model.WardModel;
 import com.example.nguyenvanphituoc.foody.R;
 
@@ -43,7 +39,7 @@ public class FoodyNewsListCityFragment extends Fragment {
     LinearLayout myListView;
     Fragment myFragment;
     WardModel myWard;
-    SendDataFromChildFragment myCallback;
+    GetDataFromChildFragment myCallback;
 
     @Override
     public void onDetach() {
@@ -58,7 +54,7 @@ public class FoodyNewsListCityFragment extends Fragment {
         if (savedInstanceState != null) {
 //            tabName = savedInstanceState.getString("tabName");
             myWard = (WardModel) savedInstanceState.get("ward");
-            myCallback = (SendDataFromChildFragment) savedInstanceState.getSerializable("fragment");
+            myCallback = (GetDataFromChildFragment) savedInstanceState.getSerializable("fragment");
         }
         myFragment = this;
     }
@@ -89,7 +85,7 @@ public class FoodyNewsListCityFragment extends Fragment {
         //set tab name is city name
         txtCity.setText(city.getName());
         //set the city is high light
-        if (myWard.getDistrict_name() == null && myWard.getName() == null)
+        if (myWard.getDistrict() == null && myWard.getStreet() == null)
             txtCity.setTextColor(getResources().getColor(R.color.clRed, null));
         txtCity.setOnClickListener(textChooseClicked(txtCity.getText().toString(), new WardModel(city.getId(), null, null)));
         // that features in future
@@ -106,7 +102,7 @@ public class FoodyNewsListCityFragment extends Fragment {
             final Button btn = (Button) view.findViewById(R.id.city_btn_right);
             //if we click district text change name to district is high light
             tv.setText(district.getName());
-            if (myWard.getDistrict_name() != null && myWard.getName() == null && tv.getText().equals(myWard.getDistrict_name()))
+            if (myWard.getDistrict() != null && myWard.getStreet() == null && tv.getText().equals(myWard.getDistrict()))
                 tv.setTextColor(getResources().getColor(R.color.clRed, null));
             //when click send data to main tab
             tv.setOnClickListener(textChooseClicked(tv.getText().toString(), new WardModel(city.getId(), district.getName(), null)));
@@ -118,7 +114,7 @@ public class FoodyNewsListCityFragment extends Fragment {
             String[] list = new String[district.wardModels.size()];
             // get simple String data
             for (int i = 0, n = district.wardModels.size(); i < n; i++)
-                list[i] = district.wardModels.get(i).getName();
+                list[i] = district.wardModels.get(i).getStreet();
             final ArrayList<String> strings = new ArrayList<>();
             strings.addAll(Arrays.asList(list));
             expandList.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strings) {
@@ -151,8 +147,8 @@ public class FoodyNewsListCityFragment extends Fragment {
             expandList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    myCallback.sendTabName(((TextView) view).getText().toString());
-                    myCallback.sendAddress(district.getCity_id(), district.getName(), district.wardModels.get(position).getName());
+                    myCallback.getTabName(((TextView) view).getText().toString());
+                    myCallback.getAddress(district.getCity_id(), district.getName(), district.wardModels.get(position).getStreet());
                     btnBackStack.performClick();
                 }
             });
@@ -181,9 +177,9 @@ public class FoodyNewsListCityFragment extends Fragment {
                 }
             });
             //check high light if the street is clicked before
-            if (district.getName().equals(myWard.getDistrict_name()) && myWard.getName() != null) {
+            if (district.getName().equals(myWard.getDistrict()) && myWard.getStreet() != null) {
                 final int[] position = new int[1];
-                findDataName(strings, myWard.getName(), position);
+                findDataName(strings, myWard.getStreet(), position);
                 if (position[0] != -1) {
                     expandList.setSelection(position[0]);
                     View templateV = getViewByPosition(position[0], expandList);
@@ -203,8 +199,8 @@ public class FoodyNewsListCityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // send data and call back
-                myCallback.sendTabName(name);
-                myCallback.sendAddress(ward.getCity_id(), ward.getDistrict_name(), ward.getName());
+                myCallback.getTabName(name);
+                myCallback.getAddress(ward.getId(), ward.getDistrict(), ward.getStreet());
                 btnBackStack.performClick();
             }
         };
