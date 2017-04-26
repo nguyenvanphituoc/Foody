@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * Created by Admin on 3/12/2017.
+ * nguyễn văn phi tước
  */
 
 public class FragmentAdapter extends FragmentStatePagerAdapter {

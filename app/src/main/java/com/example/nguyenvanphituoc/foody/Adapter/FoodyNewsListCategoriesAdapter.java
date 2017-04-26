@@ -1,12 +1,10 @@
 package com.example.nguyenvanphituoc.foody.Adapter;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -18,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
-import com.example.nguyenvanphituoc.foody.Model.ServiceModel;
 import com.example.nguyenvanphituoc.foody.R;
 
 import java.io.IOException;
@@ -27,6 +24,7 @@ import java.util.List;
 
 /**
  * Created by PhiTuocPC on 3/31/2017.
+ * nguyễn văn phi tước
  */
 
 public class FoodyNewsListCategoriesAdapter extends ArrayAdapter<CategoriesModel> {

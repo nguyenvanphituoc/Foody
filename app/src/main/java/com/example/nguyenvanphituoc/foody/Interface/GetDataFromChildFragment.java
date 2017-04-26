@@ -10,6 +10,7 @@ import com.example.nguyenvanphituoc.foody.Model.WardModel;
 
 /**
  * Created by PhiTuocPC on 4/2/2017.
+ * nguyễn văn phi tước
  */
 
 public interface GetDataFromChildFragment {

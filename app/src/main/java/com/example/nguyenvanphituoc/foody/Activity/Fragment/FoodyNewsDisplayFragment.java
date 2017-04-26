@@ -23,6 +23,7 @@ import com.example.nguyenvanphituoc.foody.R;
 
 /**
  * Created by Admin on 3/26/2017.
+ * nguyễn văn phi tước
  */
 
 public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChildFragment {

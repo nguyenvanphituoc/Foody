@@ -1,7 +1,6 @@
 package com.example.nguyenvanphituoc.foody.Adapter;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -9,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.nguyenvanphituoc.foody.Model.ServiceModel;
+import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
 import com.example.nguyenvanphituoc.foody.R;
 
 import java.io.IOException;
@@ -27,12 +25,13 @@ import java.util.List;
 
 /**
  * Created by Admin on 3/19/2017.
+ * nguyễn văn phi tước
  */
 
-public class FoodyNewsListServiceAdapter extends ArrayAdapter<ServiceModel> {
+public class FoodyNewsListServiceAdapter extends ArrayAdapter<CategoriesModel> {
     private Context mContext;
-    private List<ServiceModel> modelList;
-    public FoodyNewsListServiceAdapter(@NonNull Context context, @NonNull List<ServiceModel> objects) {
+    private List<CategoriesModel> modelList;
+    public FoodyNewsListServiceAdapter(@NonNull Context context, @NonNull List<CategoriesModel> objects) {
         super(context, 0, objects);
         this.mContext = context;
         this.modelList = objects;
@@ -48,7 +47,7 @@ public class FoodyNewsListServiceAdapter extends ArrayAdapter<ServiceModel> {
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         //get the property we are displaying
-        ServiceModel places;
+        CategoriesModel places;
         ViewHolder viewHolder;
         if (convertView == null) {
             // error 12 pos

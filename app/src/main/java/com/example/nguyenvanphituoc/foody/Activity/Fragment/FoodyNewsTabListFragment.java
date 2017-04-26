@@ -30,6 +30,7 @@ import java.util.List;
 
 /**
  * Created by Admin on 3/16/2017.
+ * nguyễn văn phi tước
  */
 
 public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChildFragment, Serializable {

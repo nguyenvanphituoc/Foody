@@ -1,6 +1,7 @@
 package com.example.nguyenvanphituoc.foody.DAO;
 
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
+import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
 import com.example.nguyenvanphituoc.foody.Model.DisplayModel;
 
 import org.ksoap2.SoapEnvelope;
@@ -14,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by PhiTuocPC on 4/24/2017.
+ * nguyễn văn phi tước
  */
 
 public class OtherServiceImpl extends ServiceAbs {
@@ -66,7 +68,7 @@ public class OtherServiceImpl extends ServiceAbs {
 
     @Override
     public Enum hasOperation(String op) {
-        for (PlaceServiceImpl.OPERATION operation : PlaceServiceImpl.OPERATION.values()) {
+        for (OtherServiceImpl.OPERATION operation : OtherServiceImpl.OPERATION.values()) {
             if (operation.toString().toUpperCase().equals(op.toUpperCase())) {
                 return operation;
             }
@@ -129,7 +131,7 @@ public class OtherServiceImpl extends ServiceAbs {
     @Override
     public void receiveData(Object data) {
         if (data != null) {
-//            listData = OtherServiceImpl.InitialData((SoapObject) data);
+            listData = initialData(data);
             this.dataMode = true;
         }
     }
@@ -153,21 +155,46 @@ public class OtherServiceImpl extends ServiceAbs {
         }
     }
 
-    private static List<DisplayModel> InitialData(SoapObject data) {
-        List<DisplayModel> list = new ArrayList<>();
+    private List<?> initialData(Object data) {
+
+        switch (op) {
+            case GetAllCategories:
+                return this.GetAllCategories((SoapObject) data);
+            case GetAllServices:
+                return this.GetAllCategories((SoapObject) data);
+            case GetAllStreetsByCity:
+                return this.GetAllStreetsByCity((SoapObject) data);
+            default:
+                return null;
+        }
+    }
+
+    private  List<CategoriesModel> GetAllStreetsByCity(SoapObject data) {
+
+        List<CategoriesModel> list = new ArrayList<>();
         try {
             for (int i = 0; i < data.getPropertyCount(); i++) {
+
                 Object property = data.getProperty(i);
                 if (property instanceof SoapObject) {
+
                     SoapObject placeObj = (SoapObject) property;
-                    DisplayModel model = new DisplayModel();
+                    CategoriesModel model = new CategoriesModel();
+
                     for (int j = 0; j < placeObj.getPropertyCount(); j++) {
-                        if (j == 3) {
-                            String base64 = placeObj.getProperty(j).toString();
+
+                        //Inside your for loop
+                        PropertyInfo itemData = new PropertyInfo();
+                        placeObj.getPropertyInfo(j, itemData);
+
+
+                        if (itemData.getName().equals("image")) {
+
+                            String base64 = itemData.getValue().toString();
                             byte[] bytes = UIUtils.getByteFromBase64(base64);
-                            model.setProperty(j, bytes);
+                            model.setProperty(itemData.getName(), bytes);
                         } else
-                            model.setProperty(j, placeObj.getProperty(j));
+                            model.setProperty(itemData.getName(), itemData.getValue().toString());
                     }
                     list.add(model);
                     Thread.sleep(50);
@@ -179,20 +206,35 @@ public class OtherServiceImpl extends ServiceAbs {
         return list;
     }
 
-    private static List<DisplayModel> InitialImage(List<DisplayModel> list, SoapObject data) {
+    private  List<CategoriesModel> GetAllCategories(SoapObject data) {
+
+        List<CategoriesModel> list = new ArrayList<>();
         try {
             for (int i = 0; i < data.getPropertyCount(); i++) {
+
                 Object property = data.getProperty(i);
                 if (property instanceof SoapObject) {
+
                     SoapObject placeObj = (SoapObject) property;
-                    int id = Integer.parseInt(placeObj.getProperty(0).toString());
-                    String base64 = placeObj.getProperty(1).toString();
-                    int index = findDisplayModelIndex(list, id);
-                    if (index != -1) {
-                        byte[] bytes = UIUtils.getByteFromBase64(base64);
-                        DisplayModel displayModel = list.get(index);
-                        displayModel.setProperty(10, bytes);
+                    CategoriesModel model = new CategoriesModel();
+
+                    for (int j = 0; j < placeObj.getPropertyCount(); j++) {
+
+                        //Inside your for loop
+                        PropertyInfo itemData = new PropertyInfo();
+                        placeObj.getPropertyInfo(j, itemData);
+
+
+                        if (itemData.getName().equals("image")) {
+
+                            String base64 = itemData.getValue().toString();
+                            byte[] bytes = UIUtils.getByteFromBase64(base64);
+                            model.setProperty(itemData.getName(), bytes);
+                        } else
+                            model.setProperty(itemData.getName(), itemData.getValue().toString());
                     }
+                    list.add(model);
+                    Thread.sleep(50);
                 }
             }
         } catch (Exception ex) {
@@ -201,20 +243,4 @@ public class OtherServiceImpl extends ServiceAbs {
         return list;
     }
 
-    private static int findDisplayModelIndex(List<DisplayModel> models, int id) {
-        for (int i = 0, n = models.size(); i < n; i++) {
-            DisplayModel displayModel = models.get(i);
-            if (displayModel.getId() == id)
-                return i;
-        }
-        return -1;
-    }
-
-    private int[] getIds(List<DisplayModel> data) {
-        int[] result = new int[data.size()];
-        for (int i = 0, n = data.size(); i < n; i++) {
-            result[i] = data.get(i).getId();
-        }
-        return result;
-    }
 }

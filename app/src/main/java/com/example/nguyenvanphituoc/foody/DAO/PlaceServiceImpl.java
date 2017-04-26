@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by PhiTuocPC on 4/5/2017.
+ * nguyễn văn phi tước
  */
 
 public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
@@ -143,7 +144,7 @@ public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
     @Override
     public void receiveData(Object data) {
         if(data != null) {
-            listData = PlaceServiceImpl.InitialData((SoapObject) data);
+            listData = this.InitialData((SoapObject) data);
             this.dataMode = true;
         }
     }
@@ -168,7 +169,7 @@ public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
         }
     }
 
-    private static List<DisplayModel> InitialData(SoapObject data) {
+    private  List<DisplayModel> InitialData(SoapObject data) {
         List<DisplayModel> list = new ArrayList<>();
         try {
             for (int i = 0; i < data.getPropertyCount(); i++) {
@@ -194,7 +195,7 @@ public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
         return list;
     }
 
-    private static List<DisplayModel> InitialImage(List<DisplayModel> list, SoapObject data) {
+    private  List<DisplayModel> InitialImage(List<DisplayModel> list, SoapObject data) {
         try {
             for (int i = 0; i < data.getPropertyCount(); i++) {
                 Object property = data.getProperty(i);
@@ -216,7 +217,7 @@ public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
         return list;
     }
 
-    private static int findDisplayModelIndex(List<DisplayModel> models, int id) {
+    private  int findDisplayModelIndex(List<DisplayModel> models, int id) {
         for (int i = 0, n = models.size(); i < n; i++) {
             DisplayModel displayModel = models.get(i);
             if (displayModel.getId() == id)

@@ -18,7 +18,9 @@ import android.widget.TextView;
 
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
+import com.example.nguyenvanphituoc.foody.DAO.ServiceAbs;
 import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
+import com.example.nguyenvanphituoc.foody.Interface.SendDataToChildFragment;
 import com.example.nguyenvanphituoc.foody.Model.CityModel;
 import com.example.nguyenvanphituoc.foody.Model.DistrictModel;
 import com.example.nguyenvanphituoc.foody.Model.WardModel;
@@ -29,17 +31,36 @@ import java.util.Arrays;
 
 /**
  * Created by PhiTuocPC on 4/3/2017.
+ * nguyễn văn phi tước
  */
 
-public class FoodyNewsListCityFragment extends Fragment {
+public class FoodyNewsListCityFragment extends Fragment implements SendDataToChildFragment {
     //    String tabName;
     Button btnBackStack;
     TextView txtCity;
     Button btnChangeCity;
     LinearLayout myListView;
     Fragment myFragment;
-    WardModel myWard;
+    ServiceAbs<WardModel> model;
     GetDataFromChildFragment myCallback;
+
+    @Override
+    public void sendBundleToChild(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void sendACKInitialData() {
+
+        model = new PlaceServiceImpl(PlaceServiceImpl.OPERATION.GetAllPlaces.toString());
+        model.acceptACKInitial(model, null);
+    }
+
+    @Override
+    public boolean getWaitingACK() {
+
+        return !model.dataMode;
+    }
 
     @Override
     public void onDetach() {

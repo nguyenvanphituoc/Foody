@@ -1,5 +1,6 @@
 package com.example.nguyenvanphituoc.foody.Activity.Fragment;
 
+import android.app.ProgressDialog;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,24 +17,46 @@ import android.widget.TextView;
 
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.Adapter.FoodyNewsListServiceAdapter;
-import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
+import com.example.nguyenvanphituoc.foody.DAO.OtherServiceImpl;
+import com.example.nguyenvanphituoc.foody.DAO.ServiceAbs;
 import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
-import com.example.nguyenvanphituoc.foody.Model.ServiceModel;
+import com.example.nguyenvanphituoc.foody.Interface.SendDataToChildFragment;
+import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
 import com.example.nguyenvanphituoc.foody.R;
 
 import java.util.ArrayList;
 
 /**
  * Created by PhiTuocPC on 3/31/2017.
+ * nguyễn văn phi tước
  */
 
-public class FoodyNewsListServiceFragment extends Fragment {
+public class FoodyNewsListServiceFragment extends Fragment  implements SendDataToChildFragment {
 //    String model;
     String tabName;
     ListView myListView;
     Button btnBackStack;
     Fragment myFragment;
     GetDataFromChildFragment mCallback;
+    ServiceAbs model;
+
+    @Override
+    public void sendBundleToChild(Bundle savedInstanceState) {
+        // not use yet
+    }
+
+    @Override
+    public void sendACKInitialData() {
+
+        model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllServices.toString());
+        model.acceptACKInitial(model, null);
+    }
+
+    @Override
+    public boolean getWaitingACK() {
+
+        return !model.dataMode;
+    }
 
     @Override
     public void onDetach() {
@@ -64,11 +87,24 @@ public class FoodyNewsListServiceFragment extends Fragment {
 //        ArrayList<ServiceModel> listData = getDataFromModel(findDataName(tabName, position));
 
 
-        ArrayList<ServiceModel> listData = ServiceModel.getAllService(new DatabaseHandler(getContext()));
-        findDataName(listData, tabName, position);
+        try {
+            ProgressDialog progressDialog;
+            progressDialog = ProgressDialog.show(this.getContext(), "Load data",
+                    "Please wait for a while.", true);
+            this.sendACKInitialData();
+            while (this.getWaitingACK()) {
+                Thread.sleep(2 * 1000);
+            }
+            progressDialog.dismiss();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        if (listData == null) return null;
-        ArrayAdapter<ServiceModel> adapter = new FoodyNewsListServiceAdapter(getContext(), listData);
+        findDataName((ArrayList<CategoriesModel>) model.listData, tabName, position);
+
+        if ((ArrayList<CategoriesModel>) model.listData == null) return null;
+        ArrayAdapter<CategoriesModel> adapter = new FoodyNewsListServiceAdapter(getContext(), model.listData);
+
         myListView.setAdapter(adapter);
         UIUtils.setListViewHeightBasedOnItems(myListView);
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,9 +151,9 @@ public class FoodyNewsListServiceFragment extends Fragment {
         }
     }
 
-    private void findDataName(ArrayList<ServiceModel> listData, String Name, int[] o) {
+    private void findDataName(ArrayList<CategoriesModel> listData, String Name, int[] o) {
         for (int i = 0, n = listData.size(); i < n; i++) {
-            ServiceModel data = listData.get(i);
+            CategoriesModel data = listData.get(i);
             if (data.getName().equals(Name)) {
                 o[0] = i;
                 return;

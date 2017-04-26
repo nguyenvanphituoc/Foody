@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by PhiTuocPC on 4/3/2017.
+ * nguyễn văn phi tước
  */
 
 public class DistrictModel implements Serializable {

@@ -9,6 +9,7 @@ import java.lang.reflect.Type;
 
 /**
  * Created by PhiTuocPC on 4/4/2017.
+ * nguyễn văn phi tước
  */
 
 public class DisplayModel implements Serializable {
@@ -24,7 +25,7 @@ public class DisplayModel implements Serializable {
     private String category_name;
     public WardModel wardModel;
     public CategoriesModel categoriesModel;
-    public ServiceModel serviceModel;
+    public CategoriesModel serviceModel;
     public PersonModel personModel;
 
     public DisplayModel() {

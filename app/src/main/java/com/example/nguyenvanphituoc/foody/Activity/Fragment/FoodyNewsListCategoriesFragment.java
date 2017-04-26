@@ -1,5 +1,6 @@
 package com.example.nguyenvanphituoc.foody.Activity.Fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,8 +15,10 @@ import android.widget.TextView;
 
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.Adapter.FoodyNewsListCategoriesAdapter;
-import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
+import com.example.nguyenvanphituoc.foody.DAO.OtherServiceImpl;
+import com.example.nguyenvanphituoc.foody.DAO.ServiceAbs;
 import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
+import com.example.nguyenvanphituoc.foody.Interface.SendDataToChildFragment;
 import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
 import com.example.nguyenvanphituoc.foody.R;
 
@@ -23,15 +26,35 @@ import java.util.ArrayList;
 
 /**
  * Created by Admin on 3/26/2017.
+ * nguyễn văn phi tước
  */
 
-public class FoodyNewsListCategoriesFragment extends Fragment {
-//    String model;
+public class FoodyNewsListCategoriesFragment extends Fragment implements SendDataToChildFragment {
+    //    String model;
     String tabName;
     ListView myListView;
     Button btnBackStack;
     Fragment myFragment;
     GetDataFromChildFragment mCallback;
+    ServiceAbs model;
+
+    @Override
+    public void sendBundleToChild(Bundle savedInstanceState) {
+        //net yet
+    }
+
+    @Override
+    public void sendACKInitialData() {
+
+        model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllCategories.toString());
+        model.acceptACKInitial(model, null);
+    }
+
+    @Override
+    public boolean getWaitingACK() {
+
+        return !model.dataMode;
+    }
 
     @Override
     public void onDetach() {
@@ -58,39 +81,52 @@ public class FoodyNewsListCategoriesFragment extends Fragment {
         myListView = (ListView) viewContent.findViewById(R.id.tabOnTopSimpleListView_List);
         myListView.setBackground(getResources().getDrawable(R.color.grey05, null));
 
-//        final int[] position = new int[1];
+        final int[] position = new int[1];
 //        ArrayList<CategoriesModel> listData = CategoriesModel.getAllCategory(new DatabaseHandler(getContext()));
-//        findDataName(listData, tabName, position);
-//
-//        if (listData == null) return null;
-//        ArrayAdapter<CategoriesModel> adapter = new FoodyNewsListCategoriesAdapter(getContext(), listData);
-//        myListView.setAdapter(adapter);
-//        UIUtils.setListViewHeightBasedOnItems(myListView);
-//        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                TextView txt = (TextView) view.findViewById(R.id.custom_inline_item_TextView);
-//                mCallback.getTabName(txt.getText().toString());
-//                btnBackStack.performClick();
-//            }
-//        });
-//        myListView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                if(position[0] == -1)
-//                    return;
-//                myListView.setSelection(position[0]);
-//                View view = getViewByPosition(position[0], myListView);
-//                TextView txt = (TextView) view.findViewById(R.id.custom_inline_item_TextView);
-//                txt.setTextColor(getResources().getColor(R.color.clRed, null));
-//            }
-//        });
-//        btnBackStack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                myFragment.getActivity().onBackPressed();
-//            }
-//        });
+        try {
+            ProgressDialog progressDialog;
+            progressDialog = ProgressDialog.show(this.getContext(), "Load data",
+                    "Please wait for a while.", true);
+            this.sendACKInitialData();
+            while (this.getWaitingACK()) {
+                Thread.sleep(2 * 1000);
+            }
+            progressDialog.dismiss();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        findDataName((ArrayList<CategoriesModel>) model.listData, tabName, position);
+
+        if ((ArrayList<CategoriesModel>) model.listData == null) return null;
+        ArrayAdapter<CategoriesModel> adapter = new FoodyNewsListCategoriesAdapter(getContext(), model.listData);
+        myListView.setAdapter(adapter);
+        UIUtils.setListViewHeightBasedOnItems(myListView);
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView txt = (TextView) view.findViewById(R.id.custom_inline_item_TextView);
+                mCallback.getTabName(txt.getText().toString());
+                btnBackStack.performClick();
+            }
+        });
+        myListView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (position[0] == -1)
+                    return;
+                myListView.setSelection(position[0]);
+                View view = getViewByPosition(position[0], myListView);
+                TextView txt = (TextView) view.findViewById(R.id.custom_inline_item_TextView);
+                txt.setTextColor(getResources().getColor(R.color.clRed, null));
+            }
+        });
+        btnBackStack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myFragment.getActivity().onBackPressed();
+            }
+        });
 
         return viewContent;
     }
