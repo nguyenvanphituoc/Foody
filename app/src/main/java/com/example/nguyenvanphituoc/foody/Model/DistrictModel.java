@@ -43,47 +43,4 @@ public class DistrictModel implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    static public ArrayList<DistrictModel> getAllDistrict(DatabaseHandler databaseHandler) {
-        ArrayList<DistrictModel> lisAll = new ArrayList<>();
-        String query = "SELECT * FROM " + TABLE_NAME;
-        SQLiteDatabase myDataBase = databaseHandler.getMyDataBase();
-        Cursor cursor = myDataBase.rawQuery(query, null);//selectQuery,selectedArguments
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(0);
-                String name = cursor.getString(1);
-                DistrictModel model = new DistrictModel(id, name);
-                lisAll.add(model);
-            } while (cursor.moveToNext());
-        }
-        // closing connection
-        cursor.close();
-        myDataBase.close();
-        return lisAll;
-    }
-
-    static public ArrayList<DistrictModel> getAllDistrictByCity(DatabaseHandler databaseHandler, CityModel cityModel){
-        ArrayList<DistrictModel> lisAll = new ArrayList<>();
-        String query = "SELECT * FROM " + TABLE_NAME + " district WHERE city_id == " + cityModel.getId();
-        SQLiteDatabase myDataBase = databaseHandler.getMyDataBase();
-        Cursor cursor = myDataBase.rawQuery(query, null);//selectQuery,selectedArguments
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(0);
-                String name = cursor.getString(1);
-                DistrictModel model = new DistrictModel(id, name);
-                lisAll.add(model);
-            } while (cursor.moveToNext());
-        }
-        // closing connection
-        cursor.close();
-        myDataBase.close();
-
-        return lisAll;
-    }
 }

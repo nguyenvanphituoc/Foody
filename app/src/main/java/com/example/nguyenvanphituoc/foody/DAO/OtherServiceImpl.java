@@ -1,8 +1,12 @@
 package com.example.nguyenvanphituoc.foody.DAO;
 
+import android.content.Context;
+
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
+import com.example.nguyenvanphituoc.foody.DAO.ExtraSupport.StaticSupportResources;
 import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
 import com.example.nguyenvanphituoc.foody.Model.DisplayModel;
+import com.example.nguyenvanphituoc.foody.Model.WardModel;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -21,6 +25,7 @@ import java.util.List;
 public class OtherServiceImpl extends ServiceAbs {
 
     private OPERATION op;
+    private Context mContext;
 
     public enum OPERATION {
         GetAllCategories,
@@ -30,14 +35,16 @@ public class OtherServiceImpl extends ServiceAbs {
 
     private int currentPage = 0;
 
-    public OtherServiceImpl() {
+    public OtherServiceImpl(Context context) {
 
+        this.mContext = context;
         currentPage = 0;
     }
 
-    public OtherServiceImpl(String op) {
+    public OtherServiceImpl(String op, Context context) {
 
         SwitchOperation(op);
+        this.mContext = context;
         currentPage = 0;
     }
 
@@ -131,7 +138,29 @@ public class OtherServiceImpl extends ServiceAbs {
     @Override
     public void receiveData(Object data) {
         if (data != null) {
+            switch (op) {
+                case GetAllServices:
+                    StaticSupportResources.saveInterFile(StaticSupportResources.FILESERVICES, (SoapObject) data, mContext);
+                    break;
+                case GetAllStreetsByCity:
+                    StaticSupportResources.saveInterFile(StaticSupportResources.FILECITY, (SoapObject) data, mContext);
+                    break;
+                case GetAllCategories:
+                    StaticSupportResources.saveInterFile(StaticSupportResources.FILECATEGORIES, (SoapObject) data, mContext);
+                    break;
+                default:
+                    break;
+            }
             listData = initialData(data);
+            this.dataMode = true;
+        }
+    }
+
+    @Override
+    public void getData() {
+        if (StaticSupportResources.ISLOADEDPLACES) {
+            Object data = StaticSupportResources.readInterFile(StaticSupportResources.FILEPLACES, mContext);
+            listData = this.InitialData((SoapObject) data);
             this.dataMode = true;
         }
     }
@@ -169,9 +198,9 @@ public class OtherServiceImpl extends ServiceAbs {
         }
     }
 
-    private  List<CategoriesModel> GetAllStreetsByCity(SoapObject data) {
+    private  List<WardModel> GetAllStreetsByCity(SoapObject data) {
 
-        List<CategoriesModel> list = new ArrayList<>();
+        List<WardModel> list = new ArrayList<>();
         try {
             for (int i = 0; i < data.getPropertyCount(); i++) {
 
@@ -179,14 +208,13 @@ public class OtherServiceImpl extends ServiceAbs {
                 if (property instanceof SoapObject) {
 
                     SoapObject placeObj = (SoapObject) property;
-                    CategoriesModel model = new CategoriesModel();
+                    WardModel model = new WardModel();
 
                     for (int j = 0; j < placeObj.getPropertyCount(); j++) {
 
                         //Inside your for loop
                         PropertyInfo itemData = new PropertyInfo();
                         placeObj.getPropertyInfo(j, itemData);
-
 
                         if (itemData.getName().equals("image")) {
 
@@ -223,7 +251,6 @@ public class OtherServiceImpl extends ServiceAbs {
                         //Inside your for loop
                         PropertyInfo itemData = new PropertyInfo();
                         placeObj.getPropertyInfo(j, itemData);
-
 
                         if (itemData.getName().equals("image")) {
 

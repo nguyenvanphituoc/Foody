@@ -67,44 +67,6 @@ public class DisplayModel implements Serializable {
         return category_name;
     }
 
-
-    public void setProperty(int index, Object value) {
-        switch (index) {
-            case 0:
-                id = Integer.parseInt(value.toString());
-                break;
-            case 1:
-                rating = Double.parseDouble(value.toString());
-                break;
-            case 2:
-                name = value.toString();
-                break;
-            case 3:
-                image = (byte[]) value;
-                break;
-            case 4:
-                category_name = value.toString();
-                break;
-            case 5:
-                service_name = value.toString();
-                break;
-            case 6:
-                city_name = value.toString();
-                break;
-            case 7:
-                district_name = value.toString();
-                break;
-            case 8:
-                ward_name = value.toString();
-                break;
-            case 9:
-                person = Integer.parseInt(value.toString());
-                break;
-            default:
-                break;
-        }
-    }
-
     public Object getPropertyInfo(String index) {
         String tmp = index.trim().toLowerCase();
         PropertyInfo pi = new PropertyInfo();
@@ -189,6 +151,7 @@ public class DisplayModel implements Serializable {
                 break;
             case "street":
                 ward_name = value.toString();
+                break;
             case "person":
                 person =  Integer.parseInt(value.toString());
                 break;

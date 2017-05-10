@@ -12,8 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.nguyenvanphituoc.foody.Activity.MainActivity;
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.Adapter.FoodyNewsListDisplayAdapter;
+import com.example.nguyenvanphituoc.foody.DAO.ExtraSupport.StaticSupportResources;
 import com.example.nguyenvanphituoc.foody.DAO.PlaceServiceImpl;
 import com.example.nguyenvanphituoc.foody.DAO.ServiceAbs;
 import com.example.nguyenvanphituoc.foody.Interface.SendDataToChildFragment;
@@ -35,8 +37,12 @@ public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChil
     @Override
     public void sendACKInitialData() {
 
-        model = new PlaceServiceImpl(PlaceServiceImpl.OPERATION.GetAllPlaces.toString());
-        model.acceptACKInitial(model, null);
+        model = new PlaceServiceImpl(PlaceServiceImpl.OPERATION.GetAllPlaces.toString(), MainActivity.mContext);
+        if (StaticSupportResources.ISLOADEDPLACES)
+            model.getData();
+        else
+            model.acceptACKInitial(model, null);
+
     }
 
     @Override

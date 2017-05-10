@@ -59,25 +59,6 @@ public class CategoriesModel implements Serializable {
         this.stt = stt;
     }
 
-    public void setProperty(int index, Object value) {
-        switch (index) {
-            case 0:
-                id = Integer.parseInt(value.toString());
-                break;
-            case 1:
-                name = value.toString();
-                break;
-            case 2:
-                blobImg = (byte[]) value;
-                break;
-            case 3:
-                stt = value.toString();
-                break;
-            default:
-                break;
-        }
-    }
-
     public Object getPropertyInfo(String index) {
         String tmp = index.trim().toLowerCase();
         PropertyInfo pi = new PropertyInfo();

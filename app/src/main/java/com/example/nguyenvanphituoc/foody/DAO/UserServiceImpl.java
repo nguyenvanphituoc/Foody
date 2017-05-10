@@ -97,4 +97,9 @@ public class UserServiceImpl  extends ServiceAbs<PersonModel> {
     public void receiveData(Object data) {
 
     }
+
+    @Override
+    public void getData() {
+
+    }
 }

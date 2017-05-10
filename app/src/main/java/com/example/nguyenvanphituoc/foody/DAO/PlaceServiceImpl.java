@@ -1,6 +1,9 @@
 package com.example.nguyenvanphituoc.foody.DAO;
 
+import android.content.Context;
+
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
+import com.example.nguyenvanphituoc.foody.DAO.ExtraSupport.StaticSupportResources;
 import com.example.nguyenvanphituoc.foody.Model.DisplayModel;
 
 import org.ksoap2.SoapEnvelope;
@@ -10,6 +13,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by PhiTuocPC on 4/5/2017.
@@ -19,6 +23,7 @@ import java.util.List;
 public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
 
     private OPERATION op;
+    private Context mContext;
 
     public enum OPERATION {
         GetAllPlaces,
@@ -33,13 +38,13 @@ public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
 
 
 
-    public PlaceServiceImpl() {
-
+    public PlaceServiceImpl(Context context) {
+        this.mContext = context;
         currentPage = 0;
     }
 
-    public PlaceServiceImpl(String op) {
-
+    public PlaceServiceImpl(String op, Context context) {
+        this.mContext = context;
         SwitchOperation(op);
         currentPage = 0;
     }
@@ -141,14 +146,30 @@ public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
         return response;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void receiveData(Object data) {
         if(data != null) {
+            switch (op) {
+                case GetAllPlaces:
+                    StaticSupportResources.saveInterFile(StaticSupportResources.FILEPLACES, (SoapObject) data, mContext);
+                    break;
+                default:
+                    break;
+            }
             listData = this.InitialData((SoapObject) data);
             this.dataMode = true;
         }
     }
 
+    @Override
+    public void getData() {
+        if (StaticSupportResources.ISLOADEDPLACES) {
+            Object data = StaticSupportResources.readInterFile(StaticSupportResources.FILEPLACES, mContext);
+            listData = this.InitialData((SoapObject) data);
+            this.dataMode = true;
+        }
+    }
 
     @Override
     public void acceptACKInitial(ServiceIF model, Object sender) {
@@ -178,37 +199,20 @@ public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
                     SoapObject placeObj = (SoapObject) property;
                     DisplayModel model = new DisplayModel();
                     for (int j = 0; j < placeObj.getPropertyCount(); j++) {
-                        if (j == 3) {
-                            String base64 = placeObj.getProperty(j).toString();
+
+                        //Inside your for loop
+                        PropertyInfo itemData = new PropertyInfo();
+                        placeObj.getPropertyInfo(j, itemData);
+
+                        if (itemData.getName().equals("img")) {
+
+                            String base64 = itemData.getValue().toString();
                             byte[] bytes = UIUtils.getByteFromBase64(base64);
-                            model.setProperty(j, bytes);
+                            model.setProperty(itemData.getName(), bytes);
                         } else
-                            model.setProperty(j, placeObj.getProperty(j));
+                            model.setProperty(itemData.getName(), itemData.getValue().toString());
                     }
                     list.add(model);
-                    Thread.sleep(50);
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return list;
-    }
-
-    private  List<DisplayModel> InitialImage(List<DisplayModel> list, SoapObject data) {
-        try {
-            for (int i = 0; i < data.getPropertyCount(); i++) {
-                Object property = data.getProperty(i);
-                if (property instanceof SoapObject) {
-                    SoapObject placeObj = (SoapObject) property;
-                    int id = Integer.parseInt(placeObj.getProperty(0).toString());
-                    String base64 = placeObj.getProperty(1).toString();
-                    int index = findDisplayModelIndex(list, id);
-                    if (index != -1) {
-                        byte[] bytes = UIUtils.getByteFromBase64(base64);
-                        DisplayModel displayModel = list.get(index);
-                        displayModel.setProperty(10, bytes);
-                    }
                 }
             }
         } catch (Exception ex) {

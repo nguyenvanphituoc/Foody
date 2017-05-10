@@ -36,7 +36,7 @@ import java.nio.charset.CharsetDecoder;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Context mContext;
+    static public Context mContext;
     Resources res;
     //main components of activity
     Toolbar toolbarMain;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public static String TABLOAD_ONTOP_POSITION = "POSITION";
     // five status of button bottom
     static private OnBottomStatus bottomToolbarStatus = OnBottomStatus.News;
-
+    static public String MYPREF = "nguyenvanphituoc";
     private enum OnBottomStatus {
         News,
         Noti,

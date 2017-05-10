@@ -1,6 +1,8 @@
 package com.example.nguyenvanphituoc.foody.Activity.Fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.nguyenvanphituoc.foody.Activity.MainActivity;
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.Adapter.FoodyNewsListServiceAdapter;
+import com.example.nguyenvanphituoc.foody.DAO.ExtraSupport.StaticSupportResources;
 import com.example.nguyenvanphituoc.foody.DAO.OtherServiceImpl;
 import com.example.nguyenvanphituoc.foody.DAO.ServiceAbs;
 import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
@@ -47,9 +51,11 @@ public class FoodyNewsListServiceFragment extends Fragment  implements SendDataT
 
     @Override
     public void sendACKInitialData() {
-
         model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllServices.toString());
-        model.acceptACKInitial(model, null);
+        if (StaticSupportResources.ISLOADEDSERVICES)
+            model.getData();
+        else
+            model.acceptACKInitial(model, null);
     }
 
     @Override

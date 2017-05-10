@@ -27,6 +27,7 @@ public abstract class ServiceAbs<T> implements  ServiceIF{
 
     public abstract void acceptACKInitial(ServiceIF model, Object sender);
 
+    public abstract void getData();
 
 
     @Override

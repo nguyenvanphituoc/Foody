@@ -22,6 +22,7 @@ public class WardModel implements Serializable {
     private String street;
     private static final String TABLE_NAME = "foody_ward";
     public DistrictModel districtModel;
+
     public ArrayList<DistrictModel> districtModels = new ArrayList<>();
     public WardModel(int city_id, String district_name, String name) {
         this.id = city_id;
@@ -61,29 +62,6 @@ public class WardModel implements Serializable {
 
     public void setStreet(String street) {
         this.street = street;
-    }
-
-    static public ArrayList<WardModel> getAllWard(DatabaseHandler databaseHandler) {
-        ArrayList<WardModel> lisAll = new ArrayList<>();
-        String query = "SELECT * FROM " + TABLE_NAME;
-        SQLiteDatabase myDataBase = databaseHandler.getMyDataBase();
-        Cursor cursor = myDataBase.rawQuery(query, null);//selectQuery,selectedArguments
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(0);
-                String district_name = cursor.getString(1);
-                String name = cursor.getString(2);
-                WardModel model = new WardModel(id, district_name, name);
-                lisAll.add(model);
-            } while (cursor.moveToNext());
-        }
-        // closing connection
-        cursor.close();
-        myDataBase.close();
-
-        return lisAll;
     }
 
 //    <id>31</id>

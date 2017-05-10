@@ -1,5 +1,6 @@
 package com.example.nguyenvanphituoc.foody.Activity.Fragment;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,16 +19,19 @@ import android.widget.TextView;
 
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
+import com.example.nguyenvanphituoc.foody.DAO.OtherServiceImpl;
 import com.example.nguyenvanphituoc.foody.DAO.ServiceAbs;
 import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
 import com.example.nguyenvanphituoc.foody.Interface.SendDataToChildFragment;
 import com.example.nguyenvanphituoc.foody.Model.CityModel;
+import com.example.nguyenvanphituoc.foody.Model.DisplayModel;
 import com.example.nguyenvanphituoc.foody.Model.DistrictModel;
 import com.example.nguyenvanphituoc.foody.Model.WardModel;
 import com.example.nguyenvanphituoc.foody.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by PhiTuocPC on 4/3/2017.
@@ -36,13 +40,11 @@ import java.util.Arrays;
 
 public class FoodyNewsListCityFragment extends Fragment implements SendDataToChildFragment {
     //    String tabName;
-    Button btnBackStack;
-    TextView txtCity;
-    Button btnChangeCity;
-    LinearLayout myListView;
-    Fragment myFragment;
-    ServiceAbs<WardModel> model;
+    ServiceAbs<?> model;
     GetDataFromChildFragment myCallback;
+    Button btnBackStack;
+    Fragment myFragment;
+    private WardModel myWard;
 
     @Override
     public void sendBundleToChild(Bundle savedInstanceState) {
@@ -52,13 +54,14 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
     @Override
     public void sendACKInitialData() {
 
-        model = new PlaceServiceImpl(PlaceServiceImpl.OPERATION.GetAllPlaces.toString());
-        model.acceptACKInitial(model, null);
     }
 
     @Override
     public boolean getWaitingACK() {
 
+        if (model == null) {
+            return true;
+        }
         return !model.dataMode;
     }
 
@@ -83,11 +86,19 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View viewContent = inflater.inflate(R.layout.inflate_onbottom_news_city, container, false);
         btnBackStack = (Button) viewContent.findViewById(R.id.city_btn_back);
-        txtCity = (TextView) viewContent.findViewById(R.id.city_text_root);
-        btnChangeCity = (Button) viewContent.findViewById(R.id.city_btn_root);
-        myListView = (LinearLayout) viewContent.findViewById(R.id.city_scroll_list);
+        TextView txtCity = (TextView) viewContent.findViewById(R.id.city_text_root);
+//        Button btnChangeCity = (Button) viewContent.findViewById(R.id.city_btn_root);
+        LinearLayout myListView = (LinearLayout) viewContent.findViewById(R.id.city_scroll_list);
+
+        viewContent.findViewById(R.id.city_btn_root).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         //backstack
         btnBackStack.setOnClickListener(new View.OnClickListener() {
@@ -98,9 +109,28 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
         });
 
         int city_id = Integer.parseInt((String) txtCity.getTag());
-        DatabaseHandler db = new DatabaseHandler(getContext());
+
+        model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllStreetsByCity.toString());
+        model.acceptACKInitial(model, city_id);
+
+        try {
+            ProgressDialog progressDialog;
+            progressDialog = ProgressDialog.show(this.getContext(), "Load data",
+                    "Please wait for a while.", true);
+            this.sendACKInitialData();
+            while (this.getWaitingACK()) {
+                Thread.sleep(2 * 1000);
+            }
+            progressDialog.dismiss();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // find all districts and streets in city
-        CityModel city = InitialDataOfCity(db, city_id);
+//        CityModel city = InitialDataOfCity(db, city_id);
+//        CityModel city = new CityModel();
+        if (model.listData == null || model.listData.size() <= 0) return null;
+        CityModel city = groupWardByCity( (ArrayList<WardModel>) model.listData);
         // check if is first click of tab => initial by text.Tag so we can change city and put value to the Tag or save to main tab
         if (myWard == null) myWard = new WardModel(city_id, null, null);
         //set tab name is city name
@@ -108,14 +138,8 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
         //set the city is high light
         if (myWard.getDistrict() == null && myWard.getStreet() == null)
             txtCity.setTextColor(getResources().getColor(R.color.clRed, null));
-        txtCity.setOnClickListener(textChooseClicked(txtCity.getText().toString(), new WardModel(city.getId(), null, null)));
+        txtCity.setOnClickListener(textChooseClicked(txtCity.getText().toString(), new WardModel(city_id, null, null)));
         // that features in future
-        btnChangeCity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         //create district and add to myListview is main list view
         for (final DistrictModel district : city.districtModels) {
             final View view = inflater.inflate(R.layout.custom_list_spinner, null, false);
@@ -227,21 +251,6 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
         };
     }
 
-    // find all data of city id
-    public CityModel InitialDataOfCity(DatabaseHandler db, int city_id) {
-        CityModel city = CityModel.getCityById(db, city_id);
-        city.districtModels = DistrictModel.getAllDistrictByCity(db, city);
-
-        for (DistrictModel districtModel : city.districtModels) {
-            districtModel.cityModel = city;
-            districtModel.wardModels = WardModel.getAllWardByDistrict(db, districtModel);
-            for (WardModel ward : districtModel.wardModels) {
-                ward.districtModel = districtModel;
-            }
-        }
-        return city;
-    }
-
     // get position of list data
     private void findDataName(ArrayList<String> listData, String Name, int[] o) {
         for (int i = 0, n = listData.size(); i < n; i++) {
@@ -252,6 +261,28 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
             }
         }
         o[0] = -1;
+    }
+
+    private CityModel groupWardByCity(List<WardModel> list) {
+
+        CityModel cityModel = new CityModel();
+        // initial first element
+        cityModel.setId(list.get(0).getId());
+        cityModel.setName(list.get(0).getCity());
+        DistrictModel sentinelDistrict = new DistrictModel(list.get(0).getId(), list.get(0).getDistrict());
+        cityModel.districtModels.add(sentinelDistrict);
+
+        for ( int i = 1, n = list.size(); i < n; i++ ) {
+
+            WardModel wardIndex = list.get(i);
+            DistrictModel district = new DistrictModel(wardIndex.getId(), wardIndex.getDistrict());
+            if (!sentinelDistrict.getName().equals(district.getName())) {
+                sentinelDistrict = district;
+                cityModel.districtModels.add(sentinelDistrict);
+            }
+            sentinelDistrict.wardModels.add(wardIndex);
+        }
+        return cityModel;
     }
 
     public View getViewByPosition(int pos, ListView listView) {
