@@ -30,6 +30,18 @@ public class WardModel implements Serializable {
         this.street = name;
     }
 
+    public WardModel(int city_id, String city) {
+        this.id = city_id;
+        this.city = city;
+    }
+
+    public WardModel(int city_id, String city, String district_name, String name) {
+        this.id = city_id;
+        this.city = city;
+        this.district = district_name;
+        this.street = name;
+    }
+
     public WardModel(){}
 
     public int getId() {

@@ -1,6 +1,7 @@
 package com.example.nguyenvanphituoc.foody.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     // five status of button bottom
     static private OnBottomStatus bottomToolbarStatus = OnBottomStatus.News;
     static public String MYPREF = "nguyenvanphituoc";
+
     private enum OnBottomStatus {
         News,
         Noti,
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             ImageButton mybtn = (ImageButton) findViewById(resID);
             mybtn.setOnClickListener(myTabBarOnrBottomClick());
         }
-       findViewById(R.id.toolbar_onBottom_imgBtn1).performClick();
+        findViewById(R.id.toolbar_onBottom_imgBtn1).performClick();
     }
 
     //....second inner funcClick change color and create view respond
@@ -112,6 +114,21 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.toolbar_onBottom_imgBtn1:
                             imgHome.setImageResource(R.mipmap.foody_logo);
                             imgPlus.setImageResource(R.drawable.ic_add_empty_32dp);
+                            imgPlus.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    try {
+                /*
+                Class.forName("com.example.dell.mysuperawesomegame.MainActivity");*/
+                                        Class clazz = Class
+                                                .forName("com.example.nguyenvanphituoc.foody.Activity.AddNewPlacesActivity");
+                                        Intent intent = new Intent(mContext, clazz);
+                                        startActivity(intent);
+                                    } catch (ClassNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                             bottomToolbarStatus = OnBottomStatus.News;
                             break;
                         case R.id.toolbar_onBottom_imgBtn2:
@@ -312,7 +329,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     //--------------------------------------------------------------------------------------------------
     //custom Toast alert dùng inflater(layout resource, viewgroup root) lấy layout toast
     private void showCustomAlert(String message) {
@@ -366,8 +382,8 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         int pos = viewPageMain.getCurrentItem();
         List<Fragment> frags = fm.getFragments();
-        for(int i = 0, count = frags.size(); i < count; i++){
-            if(i == pos){
+        for (int i = 0, count = frags.size(); i < count; i++) {
+            if (i == pos) {
                 FragmentManager childFm = frags.get(i).getChildFragmentManager();
                 if (childFm.getBackStackEntryCount() > 0) {
                     tab_onBottom.setElevation(100);

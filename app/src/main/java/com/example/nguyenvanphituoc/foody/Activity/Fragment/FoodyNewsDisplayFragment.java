@@ -33,7 +33,7 @@ public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChil
     String service = "";
     String ward = "";
     ServiceAbs<DisplayModel> model;
-
+    static int count = 0;
     @Override
     public void sendACKInitialData() {
 
@@ -42,7 +42,7 @@ public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChil
             model.getData();
         else
             model.acceptACKInitial(model, null);
-
+        count++;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChil
                     "Please wait for a while.", true);
             this.sendACKInitialData();
             while (this.getWaitingACK()) {
-                Thread.sleep(2 * 1000);
+                Thread.sleep(10);
             }
             progressDialog.dismiss();
         } catch (InterruptedException e) {

@@ -17,8 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.nguyenvanphituoc.foody.Activity.MainActivity;
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
+import com.example.nguyenvanphituoc.foody.DAO.ExtraSupport.StaticSupportResources;
 import com.example.nguyenvanphituoc.foody.DAO.OtherServiceImpl;
 import com.example.nguyenvanphituoc.foody.DAO.ServiceAbs;
 import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
@@ -110,18 +112,17 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
 
         int city_id = Integer.parseInt((String) txtCity.getTag());
 
-        model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllStreetsByCity.toString());
-        model.acceptACKInitial(model, city_id);
+        model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllStreetsByCity.toString(), MainActivity.mContext);
+        if (StaticSupportResources.ISLOADEDCITY)
+            model.getData();
+        else
+            model.acceptACKInitial(model, city_id);
 
         try {
-            ProgressDialog progressDialog;
-            progressDialog = ProgressDialog.show(this.getContext(), "Load data",
-                    "Please wait for a while.", true);
             this.sendACKInitialData();
             while (this.getWaitingACK()) {
-                Thread.sleep(2 * 1000);
+                Thread.sleep(10);
             }
-            progressDialog.dismiss();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -193,7 +194,8 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     myCallback.getTabName(((TextView) view).getText().toString());
-                    myCallback.getAddress(district.getCity_id(), district.getName(), district.wardModels.get(position).getStreet());
+                    WardModel ward = new WardModel(district.getCity_id(), district.getName(), district.wardModels.get(position).getStreet());
+                    myCallback.getAddress(ward);
                     btnBackStack.performClick();
                 }
             });
@@ -245,7 +247,8 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
             public void onClick(View v) {
                 // send data and call back
                 myCallback.getTabName(name);
-                myCallback.getAddress(ward.getId(), ward.getDistrict(), ward.getStreet());
+                WardModel tmp = new WardModel(ward.getId(), ward.getDistrict(), ward.getStreet());
+                myCallback.getAddress(tmp);
                 btnBackStack.performClick();
             }
         };

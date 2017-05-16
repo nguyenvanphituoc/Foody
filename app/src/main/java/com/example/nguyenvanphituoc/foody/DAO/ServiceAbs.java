@@ -29,7 +29,6 @@ public abstract class ServiceAbs<T> implements  ServiceIF{
 
     public abstract void getData();
 
-
     @Override
     public abstract void receiveData(Object data);
 

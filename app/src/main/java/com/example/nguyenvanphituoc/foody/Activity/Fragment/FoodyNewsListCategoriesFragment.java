@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.nguyenvanphituoc.foody.Activity.MainActivity;
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.Adapter.FoodyNewsListCategoriesAdapter;
+import com.example.nguyenvanphituoc.foody.DAO.ExtraSupport.StaticSupportResources;
 import com.example.nguyenvanphituoc.foody.DAO.OtherServiceImpl;
 import com.example.nguyenvanphituoc.foody.DAO.ServiceAbs;
 import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
@@ -45,9 +47,11 @@ public class FoodyNewsListCategoriesFragment extends Fragment implements SendDat
 
     @Override
     public void sendACKInitialData() {
-
-        model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllCategories.toString());
-        model.acceptACKInitial(model, null);
+        model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllCategories.toString(), MainActivity.mContext);
+        if (StaticSupportResources.ISLOADEDCATEGORIES)
+            model.getData();
+        else
+            model.acceptACKInitial(model, null);
     }
 
     @Override
@@ -89,7 +93,7 @@ public class FoodyNewsListCategoriesFragment extends Fragment implements SendDat
                     "Please wait for a while.", true);
             this.sendACKInitialData();
             while (this.getWaitingACK()) {
-                Thread.sleep(2 * 1000);
+                Thread.sleep(10);
             }
             progressDialog.dismiss();
         } catch (InterruptedException e) {

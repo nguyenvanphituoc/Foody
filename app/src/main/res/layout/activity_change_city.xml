@@ -28,6 +28,7 @@
             android:drawableStart="@drawable/ic_arrow_back"
             android:minHeight="32dp"
             android:text="Choose Province/City"
+            android:textSize="@dimen/text_size_small"
             android:textColor="@color/clWhite" />
 
         <TextView
@@ -38,10 +39,10 @@
             android:layout_gravity="end"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:minHeight="32dp"
+            android:minHeight="10dp"
             android:text="DONE"
             android:textColor="@color/clWhite"
-            android:textSize="@dimen/text_size_heavy" />
+            android:textSize="@dimen/text_size_small" />
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.nguyenvanphituoc.foody.Activity.AddNewPlacesActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/clRed">
+
+        <TextView
+            android:id="@+id/add_new_back"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/HOME_BUTTON"
+            android:drawableStart="@drawable/ic_arrow_back"
+            android:minHeight="32dp"
+            android:text="Thêm địa điểm"
+            android:textColor="@color/clWhite" />
+
+        <TextView
+            android:id="@+id/add_new_send"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:minHeight="32dp"
+            android:text="Gửi"
+            android:textColor="@color/clWhite"
+            android:textSize="@dimen/text_size_small" />
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clGrey"
+            android:gravity="start|center_vertical"
+            android:minHeight="32dp"
+            android:paddingStart="20dp"
+            android:text="Chọn tỉnh/ thành phố"
+            android:textAlignment="textStart"
+            android:textColor="@color/clBlack"
+            android:textSize="@dimen/text_size_small" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                style="@android:style/ButtonBar"
+                android:layout_width="0dp"
+                android:layout_height="26dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/clGreen"
+                android:text="Việt Nam"
+                android:textColor="@color/white1" />
+
+            <Button
+                android:id="@+id/add_new_btn_city"
+                style="@android:style/ButtonBar"
+                android:layout_width="0dp"
+                android:layout_height="26dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/clGreen"
+                android:tag="31"
+                android:text="TP.HCM"
+                android:textColor="@color/white1" />
+
+            <Button
+
+                android:id="@+id/add_new_btn_district"
+                style="@android:style/ButtonBar"
+                android:layout_width="0dp"
+                android:layout_height="26dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/clGreen"
+                android:text="District"
+                android:textColor="@color/white1" />
+        </LinearLayout>
+
+        <TextView
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clGrey"
+            android:gravity="start|center_vertical"
+            android:minHeight="32dp"
+            android:paddingStart="20dp"
+            android:text="Thông tin bắt buộc"
+            android:textAlignment="textStart"
+            android:textColor="@color/clBlack"
+            android:textSize="@dimen/text_size_small" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/add_new_name"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:background="@color/clWhite"
+                android:drawableEnd="@drawable/ic_chevron_right_grey"
+                android:drawableStart="@drawable/ic_perm_identity"
+                android:gravity="start|center_vertical"
+                android:hint="Tên địa điểm*"
+                android:minHeight="32dp"
+                android:paddingStart="20dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/clBlack"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/add_new_category"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:background="@color/clWhite"
+                android:drawableEnd="@drawable/ic_chevron_right_grey"
+                android:drawableStart="@drawable/ic_business_center"
+                android:gravity="start|center_vertical"
+                android:hint="Loại hình địa điểm*"
+                android:minHeight="26dp"
+                android:paddingStart="20dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/clBlack"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/add_new_service"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:background="@color/clWhite"
+                android:drawableEnd="@drawable/ic_chevron_right_grey"
+                android:drawableStart="@drawable/ic_room_service"
+                android:gravity="start|center_vertical"
+                android:hint="Loại hình dịch vụ*"
+                android:minHeight="26dp"
+                android:paddingStart="20dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/clBlack"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/add_new_btn_street"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:background="@color/clWhite"
+                android:drawableEnd="@drawable/ic_chevron_right_grey"
+                android:drawableStart="@drawable/ic_streetview"
+                android:gravity="start|center_vertical"
+                android:hint="Đường*"
+                android:minHeight="26dp"
+                android:paddingStart="20dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/clBlack"
+                android:textSize="@dimen/text_size_small" />
+        </LinearLayout>
+
+        <TextView
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clGrey"
+            android:gravity="start|center_vertical"
+            android:minHeight="32dp"
+            android:paddingStart="20dp"
+            android:text="Thông Tin Khác"
+            android:textAlignment="textStart"
+            android:textColor="@color/clBlack"
+            android:textSize="@dimen/text_size_small" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/add_new_coordinates"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:background="@color/clWhite"
+                android:drawableEnd="@drawable/ic_chevron_right_grey"
+                android:drawableStart="@drawable/ic_place"
+                android:gravity="start|center_vertical"
+                android:hint="Vị trí bản đồ"
+                android:minHeight="26dp"
+                android:paddingStart="20dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/clBlack"
+                android:textSize="@dimen/text_size_small" />
+
+            <Spinner
+                android:id="@+id/planets_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clGrey"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@color/clGrey"
+                android:contentDescription="@string/contentDesciption_Prof"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_insert_photo" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@color/clGrey"
+                android:contentDescription="@string/contentDesciption_Prof"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_camera" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

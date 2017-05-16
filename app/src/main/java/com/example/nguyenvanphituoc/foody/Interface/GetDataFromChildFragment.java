@@ -15,6 +15,6 @@ import com.example.nguyenvanphituoc.foody.Model.WardModel;
 
 public interface GetDataFromChildFragment {
     void getTabName(String name);
-    void getAddress(final int city,@Nullable final String district,@Nullable final String ward);
-
+//    void getAddress(final int city,@Nullable final String district,@Nullable final String ward);
+    void getAddress(final WardModel ward);
 }

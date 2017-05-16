@@ -51,7 +51,7 @@ public class FoodyNewsListServiceFragment extends Fragment  implements SendDataT
 
     @Override
     public void sendACKInitialData() {
-        model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllServices.toString());
+        model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllServices.toString(), MainActivity.mContext);
         if (StaticSupportResources.ISLOADEDSERVICES)
             model.getData();
         else
@@ -99,7 +99,7 @@ public class FoodyNewsListServiceFragment extends Fragment  implements SendDataT
                     "Please wait for a while.", true);
             this.sendACKInitialData();
             while (this.getWaitingACK()) {
-                Thread.sleep(2 * 1000);
+                Thread.sleep(10);
             }
             progressDialog.dismiss();
         } catch (InterruptedException e) {

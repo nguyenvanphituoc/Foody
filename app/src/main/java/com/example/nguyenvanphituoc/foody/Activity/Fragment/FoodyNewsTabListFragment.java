@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -18,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nguyenvanphituoc.foody.Activity.MainActivity;
 import com.example.nguyenvanphituoc.foody.Adapter.FragmentAdapter;
 import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
 import com.example.nguyenvanphituoc.foody.Interface.SendDataToChildFragment;
@@ -45,6 +48,8 @@ public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChi
     // send data to child fragment
     private Fragment displayFragment;
 
+    ProgressDialog progressDoalog;
+
     @Override
     public void getTabName(String name) {
         if (name != null) {
@@ -58,9 +63,9 @@ public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChi
 
 
             Bundle senData = new Bundle();
-            senData.putString("service", onTopTab.getTabAt(0).getText() != null?  onTopTab.getTabAt(0).getText().toString() : "");
-            senData.putString("category", onTopTab.getTabAt(1).getText() != null?  onTopTab.getTabAt(1).getText().toString() : "");
-            senData.putString("ward", onTopTab.getTabAt(2).getText() != null?  onTopTab.getTabAt(2).getText().toString() : "");
+            senData.putString("service", onTopTab.getTabAt(0).getText() != null ? onTopTab.getTabAt(0).getText().toString() : "");
+            senData.putString("category", onTopTab.getTabAt(1).getText() != null ? onTopTab.getTabAt(1).getText().toString() : "");
+            senData.putString("ward", onTopTab.getTabAt(2).getText() != null ? onTopTab.getTabAt(2).getText().toString() : "");
             ((SendDataToChildFragment) displayFragment).sendBundleToChild(senData);
             LayoutInflater inflater = getActivity().getLayoutInflater();
             displayFragment.onCreateView(inflater, displayViewContainer, null);
@@ -68,8 +73,8 @@ public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChi
     }
 
     @Override
-    public void getAddress(int city, String district, String ward) {
-        this.ward = new WardModel(city, district, ward);
+    public void getAddress(WardModel sender) {
+        this.ward = new WardModel(sender.getId(), sender.getDistrict(), sender.getStreet());
     }
 
     @Override
@@ -121,6 +126,7 @@ public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChi
                     tabOnBottom.setTranslationZ(1);
                     clickedTab = LayoutTab;
                     doTabChange(clickedTab.getPosition(), clickedTab.getText().toString());
+
                 }
 
                 @Override
@@ -157,11 +163,7 @@ public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChi
             senData.putString("service", "lasted");
             senData.putString("category", "");
             senData.putString("ward", "");
-            if(mainFragment instanceof  SendDataToChildFragment){
-                ((SendDataToChildFragment) mainFragment).sendACKInitialData();
-                while (((SendDataToChildFragment) mainFragment).getWaitingACK()){
-                    Thread.sleep(1*1000);
-                }
+            if (mainFragment instanceof SendDataToChildFragment) {
                 ((SendDataToChildFragment) mainFragment).sendBundleToChild(senData);
             }
             //store child fragment to display and send data to
