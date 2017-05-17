@@ -2,6 +2,7 @@ package com.example.nguyenvanphituoc.foody.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
@@ -24,7 +25,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyNewsTabGridFragment;
 import com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyNewsTabListFragment;
+import com.example.nguyenvanphituoc.foody.Activity.Fragment.FoodyPersonRegisterFragment;
 import com.example.nguyenvanphituoc.foody.Adapter.FragmentAdapter;
 import com.example.nguyenvanphituoc.foody.R;
 
@@ -68,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
         toolbarMain = (Toolbar) findViewById(R.id.toolBar_main);//
         viewPageMain = (ViewPager) findViewById(R.id.pagerMain);
         tab_onBottom = (ViewGroup) findViewById(R.id.tabbar_onBottom);
+
+        SharedPreferences sharedPref =this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("cityId", 31);
+        editor.apply();
 
         initialToolbarOnBottom();//trigger
     }
@@ -210,20 +218,22 @@ public class MainActivity extends AppCompatActivity {
 //                sendData.putString("model", myModel);
                 initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_HOME),
                         new String[]{FoodyNewsTabListFragment.class.getName(),
-                                FoodyNewsTabListFragment.class.getName()}, sendData);
+                                FoodyNewsTabGridFragment.class.getName()}, sendData);
                 break;
             case Gall:
-//                initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_GALLERY),
-//                        new String[]{FoodyNewsTabListFragment.class.getName(),
-//                                FoodyNewsTabListFragment.class.getName()}, sendData);
+                initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_GALLERY),
+                        new String[]{FoodyNewsTabListFragment.class.getName(),
+                                FoodyNewsTabGridFragment.class.getName()}, sendData);
                 break;
             case Sear:
                 break;
             case Noti:
-//                initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_NOTI),
-//                        new String[]{FoodyNewsTabListFragment.class.getName()}, sendData);
+                initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_NOTI),
+                        new String[]{FoodyNewsTabListFragment.class.getName()}, sendData);
                 break;
             case Prof:
+                initialTabMain(mainTab, getResourceOnBottom(R.array.FOODY_PERSON),
+                        new String[]{FoodyPersonRegisterFragment.class.getName()}, sendData);
                 break;
             default:
                 showCustomAlert("Some thing error in Toolbar Bottom Clicked!");

@@ -4,12 +4,12 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,44 +21,27 @@ import com.example.nguyenvanphituoc.foody.DAO.PlaceServiceImpl;
 import com.example.nguyenvanphituoc.foody.DAO.ServiceAbs;
 import com.example.nguyenvanphituoc.foody.Interface.SendDataToChildFragment;
 import com.example.nguyenvanphituoc.foody.Model.DisplayModel;
-import com.example.nguyenvanphituoc.foody.Model.WardModel;
 import com.example.nguyenvanphituoc.foody.R;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-
 /**
- * Created by Admin on 3/26/2017.
- * nguyễn văn phi tước
+ * Created by PhiTuocPC on 5/17/2017.
+ * nguyen van phi tuoc
  */
 
-public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChildFragment {
-    int category = 0;
-    int service = 0;
-    WardModel ward;
+public class FoodyNewsDisplayGridFragment  extends Fragment implements SendDataToChildFragment {
+    String category = "";
+    String service = "";
+    String ward = "";
     ServiceAbs<DisplayModel> model;
     static int count = 0;
-
     @Override
     public void sendACKInitialData() {
 
-        if (category != 0 || service != 0 || ward != null) {
-            model = new PlaceServiceImpl(PlaceServiceImpl.OPERATION.FilterPlaces.toString(), MainActivity.mContext);
-            Map<String, Object> mapping =  new HashMap<>();
-            mapping.put("serviceId", service);
-            mapping.put("categoryId", category);
-            mapping.put("ward", ward);
-            model.acceptACKInitial(model, mapping);
-        } else {
-            model = new PlaceServiceImpl(PlaceServiceImpl.OPERATION.GetAllPlaces.toString(), MainActivity.mContext);
-            if (StaticSupportResources.ISLOADEDPLACES)
-                model.getData();
-            else
-                model.acceptACKInitial(model, null);
-        }
-
+        model = new PlaceServiceImpl(PlaceServiceImpl.OPERATION.GetAllPlaces.toString(), MainActivity.mContext);
+        if (StaticSupportResources.ISLOADEDPLACES)
+            model.getData();
+        else
+            model.acceptACKInitial(model, null);
         count++;
     }
 
@@ -70,9 +53,9 @@ public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChil
     @Override
     public void sendBundleToChild(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            service = savedInstanceState.getInt("service");
-            category = savedInstanceState.getInt("category");
-            ward = (WardModel) savedInstanceState.getSerializable("ward");
+            service = savedInstanceState.getString("service");
+            category = savedInstanceState.getString("category");
+            ward = savedInstanceState.getString("ward");
         }
     }
 
@@ -84,10 +67,9 @@ public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChil
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.inflate_onbottom_news_display, container, false);
-        final ListView myListView = (ListView) contentView.findViewById(R.id.display_listview);
+        View contentView = inflater.inflate(R.layout.inflate_onbottom_news_display_grid, container, false);
+        final GridView myListView = (GridView) contentView.findViewById(R.id.display_gridview);
         ArrayAdapter<DisplayModel> adapter;
-
         try {
             ProgressDialog progressDialog;
             progressDialog = ProgressDialog.show(this.getContext(), "Load data",
@@ -102,10 +84,8 @@ public class FoodyNewsDisplayFragment extends Fragment implements SendDataToChil
         }
         if (model.listData != null) {
             adapter = new FoodyNewsListDisplayAdapter(getContext(), model.listData);
-            myListView.setAdapter(null);
             myListView.setAdapter(adapter);
         }
-        UIUtils.setListViewHeightBasedOnItems(myListView);
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

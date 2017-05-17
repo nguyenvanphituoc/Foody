@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.nguyenvanphituoc.foody.Activity.UIUtils;
 import com.example.nguyenvanphituoc.foody.DAO.ExtraSupport.StaticSupportResources;
 import com.example.nguyenvanphituoc.foody.Model.DisplayModel;
+import com.example.nguyenvanphituoc.foody.Model.WardModel;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -13,6 +14,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -31,7 +33,8 @@ public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
         GetImages,
         InsertPlaces,
         UpdatePlaces,
-        DeletePlaces
+        DeletePlaces,
+        FilterPlaces,
     }
 
     private int currentPage = 0;
@@ -65,6 +68,10 @@ public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
         switch (op) {
             case GetAllPlaces:
                 return GetAllPlaces();
+            case FilterPlaces:
+                if (sender == null) return null;
+                Map<String, Object> tmp = (Map<String, Object>) sender;
+                return FilterPlaces( (int) tmp.get("serviceId"), (int) tmp.get("categoryId"), (WardModel) tmp.get("ward"));
             case GetImages:
                 return GetImages((int[]) sender);
             case GetPlacesByCondition:
@@ -114,6 +121,56 @@ public class PlaceServiceImpl extends ServiceAbs<DisplayModel> {
         }
         currentPage++;
         request.addProperty("ids", soapIds);
+
+        Object response;
+        try {
+            httpTransport.call(SOAP_ACTION, envelope);
+            response = envelope.getResponse();
+        } catch (Exception exception) {
+            response = exception.toString();
+        }
+        return response;
+    }
+
+    private Object FilterPlaces(int serviceId, int categoryId, WardModel ward) {
+
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.setOutputSoapObject(request);
+        if (ward == null) ward = new WardModel(0, "a", "b", "c");
+//        envelope.addMapping(WSDL_TARGET_NAMESPACE, "ward",
+//                ward.getClass());
+
+        HttpTransportSE httpTransport = new HttpTransportSE(this.SOAP_ADDRESS);
+
+        PropertyInfo pServiceId = new PropertyInfo();
+        pServiceId.setName("serviceId");
+        pServiceId.setValue(serviceId);
+        pServiceId.setType(Integer.class);
+        request.addProperty(pServiceId);
+
+        PropertyInfo pCategoryId = new PropertyInfo();
+        pCategoryId.setName("categoryId");
+        pCategoryId.setValue(categoryId);
+        pCategoryId.setType(Integer.class);
+        request.addProperty(pCategoryId);
+
+/*        SoapObject abc = new SoapObject(WSDL_TARGET_NAMESPACE, "ward");
+        for (int i = 0, n = ward.getPropertyCount(); i < n; i++){
+            PropertyInfo pWard = new PropertyInfo();
+            ward.getPropertyInfo(i, null, pWard);
+            abc.addProperty(pWard);
+        }
+        request.addSoapObject(abc);*/
+
+/*        PropertyInfo pWard = new PropertyInfo();
+        pWard.setName("ward");
+        pWard.setValue(ward);
+        pWard.setType(ward.getClass());
+        request.addProperty(pWard);*/
 
         Object response;
         try {

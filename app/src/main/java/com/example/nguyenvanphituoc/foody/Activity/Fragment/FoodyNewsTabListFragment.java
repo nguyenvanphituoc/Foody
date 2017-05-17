@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.nguyenvanphituoc.foody.Activity.MainActivity;
 import com.example.nguyenvanphituoc.foody.Adapter.FragmentAdapter;
+import com.example.nguyenvanphituoc.foody.DAO.ExtraSupport.StaticSupportResources;
 import com.example.nguyenvanphituoc.foody.Interface.GetDataFromChildFragment;
 import com.example.nguyenvanphituoc.foody.Interface.SendDataToChildFragment;
 import com.example.nguyenvanphituoc.foody.Model.WardModel;
@@ -37,6 +38,7 @@ import java.util.List;
  */
 
 public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChildFragment, Serializable {
+
     private String[] tabName;
     private FrameLayout displayViewContainer;
     //    private String model;
@@ -48,33 +50,38 @@ public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChi
     // send data to child fragment
     private Fragment displayFragment;
 
-    ProgressDialog progressDoalog;
-
     @Override
     public void getTabName(String name) {
         if (name != null) {
-            clickedTab.setText(name);
+            StaticSupportResources.ISLOADEDPLACES = false;
+            String[] names = name.split(":");
+
+            clickedTab.setText(names[1]);
+            clickedTab.setTag(names[0]);
             View v = clickedTab.getCustomView();
             assert v != null;
-            ((TextView) v).setText(name);
+            ((TextView) v).setText(names[1]);
             ((TextView) v).setTextColor(getResources().getColor(R.color.clRed, null));
-            if (name.contains("categories"))
+            if (names[1].contains("categories"))
                 ((TextView) v).setTextColor(getResources().getColor(R.color.clBlack, null));
 
 
             Bundle senData = new Bundle();
-            senData.putString("service", onTopTab.getTabAt(0).getText() != null ? onTopTab.getTabAt(0).getText().toString() : "");
-            senData.putString("category", onTopTab.getTabAt(1).getText() != null ? onTopTab.getTabAt(1).getText().toString() : "");
-            senData.putString("ward", onTopTab.getTabAt(2).getText() != null ? onTopTab.getTabAt(2).getText().toString() : "");
+            senData.putInt("service", Integer.parseInt(onTopTab.getTabAt(0).getTag().toString()));
+            senData.putInt("category", Integer.parseInt(onTopTab.getTabAt(1).getTag().toString()));
+            senData.putSerializable("ward", this.ward);
+            final FragmentTransaction ft = getFragmentManager().beginTransaction();
             ((SendDataToChildFragment) displayFragment).sendBundleToChild(senData);
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            displayFragment.onCreateView(inflater, displayViewContainer, null);
+            ft.detach(displayFragment);
+            ft.attach(displayFragment);
+            ft.commit();
         }
     }
 
     @Override
     public void getAddress(WardModel sender) {
         this.ward = new WardModel(sender.getId(), sender.getDistrict(), sender.getStreet());
+
     }
 
     @Override
@@ -94,6 +101,11 @@ public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChi
         this.displayViewContainer = (FrameLayout) mView.findViewById(R.id.main_view_layout);
         tabOnBottom = (ViewGroup) ((View) container.getParent()).findViewById(R.id.tabbar_onBottom);
         onTopTab = initialOnTopTab(mView);
+
+        onTopTab.getTabAt(0).setTag(0);
+        onTopTab.getTabAt(1).setTag(0);
+        onTopTab.getTabAt(2).setTag(0);
+
         initFragment(FoodyNewsDisplayFragment.class.getName());
         return mView;
     }
@@ -160,9 +172,9 @@ public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChi
             Class<?> clazz = Class.forName(fragmentName);
             Fragment mainFragment = (Fragment) clazz.newInstance();
             Bundle senData = new Bundle();
-            senData.putString("service", "lasted");
-            senData.putString("category", "");
-            senData.putString("ward", "");
+            senData.putInt("service", Integer.parseInt(onTopTab.getTabAt(0).getTag().toString()));
+            senData.putInt("category", Integer.parseInt(onTopTab.getTabAt(1).getTag().toString()));
+            senData.putSerializable("ward", this.ward);
             if (mainFragment instanceof SendDataToChildFragment) {
                 ((SendDataToChildFragment) mainFragment).sendBundleToChild(senData);
             }
@@ -170,7 +182,7 @@ public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChi
             displayFragment = mainFragment;
             FragmentManager fragmentManager = getChildFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
-            ft.add(displayViewContainer.getId(), mainFragment);
+            ft.add(displayViewContainer.getId(), mainFragment, mainFragment.getClass().getName());
             ft.commit();
         } catch (Exception ex) {
             Toast.makeText(this.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -196,7 +208,7 @@ public class FoodyNewsTabListFragment extends Fragment implements GetDataFromChi
                 fragmentManager.popBackStack();
 
             FragmentTransaction ft = fragmentManager.beginTransaction();
-            ft.add(displayViewContainer.getId(), mainFragment);
+            ft.add(displayViewContainer.getId(), mainFragment, mainFragment.getClass().getName());
             ft.addToBackStack(mainFragment.getClass().getSimpleName());
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();

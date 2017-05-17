@@ -45,8 +45,11 @@
     <array name="FOODY_NOTI">
         <item>@array/FOODY_NOTI_NOTIFICATION</item>
     </array>
+    <array name="FOODY_PERSON">
+        <item>@array/FOODY_NOTI_NOTIFICATION</item>
+    </array>
     <string-array name="FOODY_NOTI_NOTIFICATION">
-        <item>Notifications</item>
+        <item>Profile</item>
         <item>Order</item>
         <item>Social</item>
         <item>News</item>

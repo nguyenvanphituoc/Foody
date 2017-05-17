@@ -1,11 +1,15 @@
 package com.example.nguyenvanphituoc.foody.Activity.Fragment;
 
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +35,7 @@ import com.example.nguyenvanphituoc.foody.Model.DistrictModel;
 import com.example.nguyenvanphituoc.foody.Model.WardModel;
 import com.example.nguyenvanphituoc.foody.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,13 +45,37 @@ import java.util.List;
  * nguyễn văn phi tước
  */
 
-public class FoodyNewsListCityFragment extends Fragment implements SendDataToChildFragment {
+public class FoodyNewsListCityFragment extends Fragment implements SendDataToChildFragment, GetDataFromChildFragment, Serializable {
     //    String tabName;
     ServiceAbs<?> model;
     GetDataFromChildFragment myCallback;
     Button btnBackStack;
-    Fragment myFragment;
+    FoodyNewsListCityFragment myFragment;
+    TextView txtCity;
     private WardModel myWard;
+
+    @Override
+    public void getTabName(String name) {
+
+    }
+
+    @Override
+    public void getAddress(WardModel ward) {
+        txtCity.setText(ward.getCity());
+        txtCity.setTag(ward.getId());
+        StaticSupportResources.ISLOADEDCITY = false;
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("cityId", ward.getId());
+        editor.apply();
+        // reload fragment
+        FoodyNewsListCityFragment frg ;
+        frg = (FoodyNewsListCityFragment) getFragmentManager().findFragmentByTag(this.getClass().getName());
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
+    }
 
     @Override
     public void sendBundleToChild(Bundle savedInstanceState) {
@@ -91,16 +120,9 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
 
         View viewContent = inflater.inflate(R.layout.inflate_onbottom_news_city, container, false);
         btnBackStack = (Button) viewContent.findViewById(R.id.city_btn_back);
-        TextView txtCity = (TextView) viewContent.findViewById(R.id.city_text_root);
-//        Button btnChangeCity = (Button) viewContent.findViewById(R.id.city_btn_root);
+        txtCity = (TextView) viewContent.findViewById(R.id.city_text_root);
+        Button btnChangeCity = (Button) viewContent.findViewById(R.id.city_btn_root);
         LinearLayout myListView = (LinearLayout) viewContent.findViewById(R.id.city_scroll_list);
-
-        viewContent.findViewById(R.id.city_btn_root).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         //backstack
         btnBackStack.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +131,27 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
                 myFragment.getActivity().onBackPressed();
             }
         });
+        //btn change city
+        btnChangeCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle myBundle = new Bundle();
 
-        int city_id = Integer.parseInt((String) txtCity.getTag());
+                myBundle.putSerializable("myCallBack", myFragment);
+                myBundle.putString("operation", OtherServiceImpl.OPERATION.GetAllCitys.toString());
+
+                DialogFragment newFragment = new FoodyAddNewDialogFragment();
+                ((SendDataToChildFragment) newFragment).sendBundleToChild(myBundle);
+                ((SendDataToChildFragment) newFragment).sendACKInitialData();
+
+                newFragment.show(myFragment.getActivity().getFragmentManager(), "choose");
+            }
+        });
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        int city_id = sharedPref.getInt("cityId", 31);
+
+//        int city_id = Integer.parseInt((String) txtCity.getTag());
 
         model = new OtherServiceImpl(OtherServiceImpl.OPERATION.GetAllStreetsByCity.toString(), MainActivity.mContext);
         if (StaticSupportResources.ISLOADEDCITY)
@@ -193,9 +234,10 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
             expandList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    myCallback.getTabName(((TextView) view).getText().toString());
+
                     WardModel ward = new WardModel(district.getCity_id(), district.getName(), district.wardModels.get(position).getStreet());
                     myCallback.getAddress(ward);
+                    myCallback.getTabName(0+":"+((TextView) view).getText().toString());
                     btnBackStack.performClick();
                 }
             });
@@ -246,9 +288,9 @@ public class FoodyNewsListCityFragment extends Fragment implements SendDataToChi
             @Override
             public void onClick(View v) {
                 // send data and call back
-                myCallback.getTabName(name);
                 WardModel tmp = new WardModel(ward.getId(), ward.getDistrict(), ward.getStreet());
                 myCallback.getAddress(tmp);
+                myCallback.getTabName(0+":"+name);
                 btnBackStack.performClick();
             }
         };

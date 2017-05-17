@@ -5,17 +5,19 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.nguyenvanphituoc.foody.DAO.DatabaseHandler;
 
+import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * Created by PhiTuocPC on 4/3/2017.
  * nguyễn văn phi tước
  */
 
-public class WardModel implements Serializable {
+public class WardModel implements Serializable, KvmSerializable {
     private int id;
     private String city;
     private String district;
@@ -43,6 +45,71 @@ public class WardModel implements Serializable {
     }
 
     public WardModel(){}
+
+    @Override
+    public Object getProperty(int index) {
+        switch (index) {
+            case 0:
+               return this.id;
+            case 1:
+                return this.city;
+            case 2:
+                return this.district;
+            case 3:
+                return this.street;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public int getPropertyCount() {
+        return 4;
+    }
+
+    @Override
+    public void getPropertyInfo(int index, Hashtable properties, PropertyInfo info) {
+        switch (index) {
+            case 0:
+                info.setName("id");
+                info.setValue(this.getId());
+                info.setType(Integer.TYPE);
+            case 1:
+                info.setName("city");
+                info.setValue(this.getCity());
+                info.setType(String.class);
+            case 2:
+                info.setName("district");
+                info.setValue(this.getDistrict());
+                info.setType(String.class);
+            case 3:
+                info.setName("street");
+                info.setValue(this.getStreet());
+                info.setType(String.class);
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void setProperty(int index, Object value) {
+        switch (index) {
+            case 0:
+                id = Integer.parseInt(value.toString());
+                break;
+            case 1:
+                city = value.toString();
+                break;
+            case 2:
+                district = value.toString();
+                break;
+            case 3:
+                street = value.toString();
+                break;
+            default:
+                break;
+        }
+    }
 
     public int getId() {
         return id;
@@ -76,60 +143,6 @@ public class WardModel implements Serializable {
         this.street = street;
     }
 
-//    <id>31</id>
-//    <city>TP Hồ Chí Minh</city>
-//    <district>Bình Chánh</district>
-//    <street>Đinh Bộ Lĩnh</street>
-
-    public void setProperty(int index, Object value) {
-        switch (index) {
-            case 0:
-                id = Integer.parseInt(value.toString());
-                break;
-            case 1:
-                city = value.toString();
-                break;
-            case 2:
-                district = value.toString();
-                break;
-            case 3:
-                street = value.toString();
-                break;
-            default:
-                break;
-        }
-    }
-
-    public Object getPropertyInfo(String index) {
-        String tmp = index.trim().toLowerCase();
-        PropertyInfo pi = new PropertyInfo();
-
-        switch (tmp) {
-            case "id":
-                pi.setName("id");
-                pi.setValue(this.getId());
-                pi.setType(Integer.TYPE);
-                return pi;
-            case "city":
-                pi.setName("name");
-                pi.setValue(this.getCity());
-                pi.setType(this.getCity().getClass());
-                return pi;
-            case "district":
-                pi.setName("image");
-                pi.setValue(this.getDistrict());
-                pi.setType(this.getDistrict().getClass());
-                return pi;
-            case "street":
-                pi.setName("status");
-                pi.setValue(this.getStreet());
-                pi.setType(this.getStreet().getClass());
-                return pi;
-            default:
-                return null;
-        }
-    }
-
     public void setProperty(String index, Object value) {
         String tmp = index.trim().toLowerCase();
         switch (tmp) {
@@ -149,5 +162,4 @@ public class WardModel implements Serializable {
                 break;
         }
     }
-
 }

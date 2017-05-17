@@ -29,6 +29,7 @@ import com.example.nguyenvanphituoc.foody.Model.CategoriesModel;
 import com.example.nguyenvanphituoc.foody.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by PhiTuocPC on 3/31/2017.
@@ -117,7 +118,10 @@ public class FoodyNewsListServiceFragment extends Fragment  implements SendDataT
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView txt = (TextView) view.findViewById(R.id.custom_inline_item_TextView);
-                mCallback.getTabName(txt.getText().toString());
+                List<CategoriesModel> data = (ArrayList<CategoriesModel>) model.listData;
+                String text = Integer.toString(data.get(position).getId());
+                text += ":" + txt.getText();
+                mCallback.getTabName(text);
                 btnBackStack.performClick();
             }
         });
